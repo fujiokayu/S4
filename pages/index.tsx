@@ -12,7 +12,7 @@ const fetcher = (url, token) =>
 const Index = () => {
   const { user, logout } = useUser()
   const { data, error } = useSWR(
-    user ? ['/api/getFood', user.token] : null,
+    user ? ['/api/listFile', user.token] : null,
     fetcher
   )
   if (!user) {

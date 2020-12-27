@@ -1,6 +1,8 @@
 import * as admin from 'firebase-admin'
+const { Storage } = require('@google-cloud/storage');
+const storage = new Storage();
 
-export const verifyIdToken = (token) => {
+export const getFiles = (token) => {
   const firebasePrivateKey = process.env.FIREBASE_PRIVATE_KEY
 
   if (!admin.apps.length) {
@@ -16,9 +18,11 @@ export const verifyIdToken = (token) => {
     })
   }
 
+  const bucket = admin.storage().bucket();
   return admin
-    .auth()
-    .verifyIdToken(token)
+    .storage()
+    .bucket()
+    .getFiles()
     .catch((error) => {
       throw error
     })
