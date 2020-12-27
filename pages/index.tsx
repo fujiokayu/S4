@@ -52,7 +52,15 @@ const Index = () => {
       </div>
       {error && <div>Failed to fetch food!</div>}
       {data && !error ? (
-        <div>Your favorite food is {data.food}.</div>
+        <div>
+          {data.fileList.length > 0 ? (
+            data.fileList.map((file) => (
+              <p>{file.name}</p>
+            ))
+          ) : (
+            <p>no files</p>
+          )}
+        </div>
       ) : (
         <div>Loading...</div>
       )}

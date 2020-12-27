@@ -11,12 +11,9 @@ const listFile = async (req, res) => {
     await verifyIdToken(token)
     const [files] = await getFiles()
     console.log('Files:');
-    files.forEach(file => {
-      console.log(file.name);
-    });
 
     return res.status(200).json({
-      food: favoriteFoods[Math.floor(Math.random() * favoriteFoods.length)]
+      fileList: files
     })
   } catch (error) {
     console.log(error)
