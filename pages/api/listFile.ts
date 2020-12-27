@@ -2,8 +2,6 @@ import { verifyIdToken } from '../../utils/auth/firebaseAdmin'
 import { getFiles } from '../../utils/storage/getFiles'
 import * as admin from 'firebase-admin'
 
-const favoriteFoods = ['pizza', 'burger', 'chips', 'tortilla']
-
 const listFile = async (req, res) => {
   const token = req.headers.token
 
