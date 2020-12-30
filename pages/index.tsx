@@ -1,20 +1,9 @@
-import useSWR from 'swr'
 import Link from 'next/link'
 import { useUser } from '../utils/auth/useUser'
-
-const fetcher = (url, token) =>
-  fetch(url, {
-    method: 'GET',
-    headers: new Headers({ 'Content-Type': 'application/json', token }),
-    credentials: 'same-origin',
-  }).then((res) => res.json())
+import List from '../components/List'
 
 const Index = () => {
   const { user, logout } = useUser()
-  const { data, error } = useSWR(
-    user ? ['/api/listFile', user.token] : null,
-    fetcher
-  )
   if (!user) {
     return (
       <>
@@ -50,20 +39,7 @@ const Index = () => {
           <a>Another example page</a>
         </Link>
       </div>
-      {error && <div>Failed to fetch food!</div>}
-      {data && !error ? (
-        <div>
-          {data.fileList.length > 0 ? (
-            data.fileList.map((file) => (
-              <p>{file.name}</p>
-            ))
-          ) : (
-            <p>no files</p>
-          )}
-        </div>
-      ) : (
-        <div>Loading...</div>
-      )}
+      <List user={user}/>
     </div>
   )
 }
