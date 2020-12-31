@@ -1,14 +1,14 @@
 import useSWR from 'swr'
 
 const Upload = (props) => {
-  const uploader = (url, token, source) =>
+  const uploader = (url, token, source, name) =>
   fetch(url, {
     method: 'POST',
-    headers: new Headers({ 'Content-Type': 'application/json', token , source}),
+    headers: new Headers({ 'Content-Type': 'application/json', token , source, name}),
     credentials: 'same-origin',
   }).then((res) => res.json())
   const { data, error } = useSWR(
-    props ? ['/api/upload', props.user.token, props.file] : null,
+    props ? ['/api/upload', props.user.token, props.file.source, props.file.name] : null,
     uploader
   )
 

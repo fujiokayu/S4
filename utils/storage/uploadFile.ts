@@ -1,11 +1,11 @@
 import * as admin from 'firebase-admin'
-const filePath = 'test/some.jpg';
+const filePath = 'test/';
 
-export const uploadFile = (source) => {
+export const uploadFile = (name, source) => {
   return admin
     .storage()
     .bucket()
-    .file(filePath)
+    .file(filePath + name)
     .save(source)
     .catch((error) => {
       throw error

@@ -62,7 +62,7 @@ const Index = () => {
             <img src={file.source} alt='preview' />
             <span> Name: {file.name} </span>
             <span> Size: {file.size} </span>
-            <Upload user={user} file={file.source}/>
+            <Upload user={user} file={file}/>
           </div>
         ) : (
           <span>No file selected</span>
