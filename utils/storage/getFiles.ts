@@ -1,10 +1,6 @@
 import * as admin from 'firebase-admin'
-const { Storage } = require('@google-cloud/storage');
 
-const storage = new Storage();
-
-export const getFiles = (token) => {
-  const bucket = admin.storage().bucket();
+export const getFiles = () => {
   return admin
     .storage()
     .bucket()

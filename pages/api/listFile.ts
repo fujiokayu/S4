@@ -8,7 +8,6 @@ const listFile = async (req, res) => {
   try {
     await verifyIdToken(token)
     const [files] = await getFiles()
-    console.log('Files:');
 
     return res.status(200).json({
       fileList: files
