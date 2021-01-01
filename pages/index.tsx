@@ -54,7 +54,7 @@ const Index = () => {
             })
           }}
         >
-          Click to Upload
+          select file to upload
         </button>
 
         {file ? (

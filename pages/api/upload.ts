@@ -3,8 +3,8 @@ import { uploadFile } from '../../utils/storage/uploadFile'
 
 const upload = async (req, res) => {
   const token = req.headers.token
-  const source = req.headers.source
   const name = req.headers.name
+  const source = req.body
 
   try {
     await verifyIdToken(token)

@@ -1,22 +1,24 @@
-import useSWR from 'swr'
-
 const Upload = (props) => {
-  const uploader = (url, token, source, name) =>
-  fetch(url, {
-    method: 'POST',
-    headers: new Headers({ 'Content-Type': 'application/json', token , source, name}),
-    credentials: 'same-origin',
-  }).then((res) => res.json())
-  const { data, error } = useSWR(
-    props ? ['/api/upload', props.user.token, props.file.source, props.file.name] : null,
-    uploader
-  )
+  function onSubmit(event) {
+    event.preventDefault()
+
+    fetch("/api/upload", {
+      method: 'POST',
+      headers: new Headers({ 
+        'Content-Type': 'multipart/form-data', 
+        'token': props.user.token, 
+        'name': props.file.name}),
+      credentials: 'same-origin',
+      body: JSON.stringify(props.file.source) 
+      // Todo: API resolved without sending a response for /api/upload, this may result in stalled requests.
+    }).then((res) => res.json())
+    }
 
   return (
-    <div>
-      {error && <div>Failed to upload files...</div>}
-      {!error && <div>File upload succeed !</div>}
-    </div>
+    <form onSubmit={onSubmit}>
+      <input type="file"/>
+      <button type="submit">upload</button>
+    </form>
   )
 }
 
