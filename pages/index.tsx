@@ -1,4 +1,3 @@
-import useSWR from 'swr'
 import Link from 'next/link'
 import { useUser } from '../utils/auth/useUser'
 import List from '../components/List'
@@ -57,15 +56,12 @@ const Index = () => {
           select file to upload
         </button>
 
-        {file ? (
+        {file && (
           <div>
-            <img src={file.source} alt='preview' />
             <span> Name: {file.name} </span>
             <span> Size: {file.size} </span>
             <Upload user={user} file={file}/>
           </div>
-        ) : (
-          <span>No file selected</span>
         )}
       </div>
     </div>

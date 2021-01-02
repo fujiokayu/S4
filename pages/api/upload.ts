@@ -6,6 +6,7 @@ const upload = async (req, res) => {
   const name = req.headers.name
   const source = req.body
 
+  console.log(req.body)
   try {
     await verifyIdToken(token)
     

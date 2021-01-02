@@ -16,7 +16,6 @@ const Upload = (props) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <input type="file"/>
       <button type="submit">upload</button>
     </form>
   )
