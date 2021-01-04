@@ -6,22 +6,26 @@ export const setBucket = async (user) => {
     const exist = await exists(user.id)
     
     if (exist) {
+      console.log('exists: ', user.id)
       return user.id
     }
 
     await storeUser(user)
-    const fetcher = (url, token) =>
-    fetch(url, {
-      method: 'POST',
-      headers: new Headers({ 'Content-Type': 'application/json', token }),
-      credentials: 'same-origin',
-    }).then((res) => res.json())
 
-    const { data, error } = useSWR(
-      ['/api/create', user.token],
-      fetcher
-    )
+    const response = await fetch("/api/create", {
+      method: 'POST',
+      headers: new Headers({ 
+        'Content-Type': 'multipart/form-data', 
+        'token': user.token, 
+        // cannot use uppercase for Bucket name 
+        'id': user.id.toLowerCase()}),
+      credentials: 'same-origin'
+      // Todo: API resolved without sending a response for /api/create, this may result in stalled requests.
+    })
+
+    console.log('create Bucket responce: ', response)
   } catch (error) {
+    console.error('setBucket Exception: ', error)
   }
 }
 
