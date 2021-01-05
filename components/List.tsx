@@ -1,14 +1,14 @@
 import useSWR from 'swr'
 
 const List = (props) => {
-  const fetcher = (url, token) =>
+  const fetcher = (url, token, id) =>
   fetch(url, {
     method: 'GET',
-    headers: new Headers({ 'Content-Type': 'application/json', token }),
+    headers: new Headers({ 'Content-Type': 'application/json', token, id }),
     credentials: 'same-origin',
   }).then((res) => res.json())
   const { data, error } = useSWR(
-    props ? ['/api/listFile', props.user.token] : null,
+    props ? ['/api/listFile', props.user.token, props.user.id] : null,
     fetcher
   )
 

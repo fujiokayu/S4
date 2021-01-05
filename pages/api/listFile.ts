@@ -3,10 +3,11 @@ import { getFiles } from '../../utils/storage/getFiles'
 
 const listFile = async (req, res) => {
   const token = req.headers.token
+  const id = req.headers.id
 
   try {
     await verifyIdToken(token)
-    const [files] = await getFiles()
+    const [files] = await getFiles(id.toLowerCase())
 
     return res.status(200).json({
       fileList: files
