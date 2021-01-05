@@ -7,7 +7,8 @@ export const setBucket = async (user) => {
     
     if (exist) {
       console.log('exists: ', user.id)
-      return user.id
+        // cannot use uppercase for Bucket name 
+        return user.id.toLowerCase()
     }
 
     await storeUser(user)
@@ -17,7 +18,6 @@ export const setBucket = async (user) => {
       headers: new Headers({ 
         'Content-Type': 'multipart/form-data', 
         'token': user.token, 
-        // cannot use uppercase for Bucket name 
         'id': user.id.toLowerCase()}),
       credentials: 'same-origin'
       // Todo: API resolved without sending a response for /api/create, this may result in stalled requests.
