@@ -17,8 +17,7 @@ export const setBucket = async (user) => {
       method: 'POST',
       headers: new Headers({ 
         'Content-Type': 'multipart/form-data', 
-        'token': user.token, 
-        'id': user.id.toLowerCase()}),
+        'token': user.token}),
       credentials: 'same-origin'
       // Todo: API resolved without sending a response for /api/create, this may result in stalled requests.
     })
