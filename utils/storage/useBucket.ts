@@ -1,7 +1,7 @@
 import { exists, storeUser } from '../firestore/storeUser'
 import useSWR from 'swr'
 
-export const setBucket = async (user) => {
+export const useBucket = async (user) => {
   try {
     const exist = await exists(user.id)
     

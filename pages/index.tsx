@@ -3,6 +3,7 @@ import { useUser } from '../utils/auth/useUser'
 import List from '../components/List'
 import Upload from '../components/Upload'
 import { useFileUpload } from 'use-file-upload'
+import { useBucket } from '../utils/storage/useBucket'
 
 const Index = () => {
   const { user, logout } = useUser()
@@ -20,6 +21,9 @@ const Index = () => {
         </p>
       </>
     )
+  }
+  else {
+    useBucket(user)
   }
 
   return (
