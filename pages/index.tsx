@@ -8,7 +8,7 @@ import { useBucket } from '../utils/storage/useBucket'
 const Index = () => {
   const { user, logout } = useUser()
   const [file, selectFile] = useFileUpload()
-  
+
   if (!user) {
     return (
       <>
@@ -21,9 +21,6 @@ const Index = () => {
         </p>
       </>
     )
-  }
-  else {
-    useBucket(user)
   }
 
   return (
