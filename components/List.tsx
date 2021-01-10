@@ -19,7 +19,9 @@ const List = (props) => {
         <div>
           {data.fileList.length > 0 ? (
             data.fileList.map((file) => (
-              <li key={file.metadata.id.toString()}>{file.name}</li>
+              <li key={file.metadata.id.toString()}>
+                {file.name.substring(file.name.indexOf('/')+1)}
+              </li>
             ))
           ) : (
             <p>no files</p>
