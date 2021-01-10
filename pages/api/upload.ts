@@ -6,12 +6,11 @@ const upload = async (req, res) => {
   const name = req.headers.name
   const source = req.body
 
-  console.log(req.body)
   try {
-    await verifyIdToken(token)
-    
-    console.log('success verifyIdToken')
-    await uploadFile(name, source)
+    const verifideToken = await verifyIdToken(token)
+    const path = verifideToken.uid + '/' + name
+
+    await uploadFile(path, source)
     return res.status(200)
   } catch (error) {
     console.log(error)

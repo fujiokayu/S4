@@ -6,10 +6,8 @@ const listFile = async (req, res) => {
 
   try {
     const verifideToken = await verifyIdToken(token)
-    const uid = verifideToken.uid
-
-    const [files] = await getFiles(uid.toLowerCase())
-
+    
+    const [files] = await getFiles(verifideToken.uid)
     return res.status(200).json({
       fileList: files
     })

@@ -1,0 +1,9 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {  // this should be this string literally, no need to put in the bucket name
+    match /{userId}/{allPaths=**}{
+      allow read: if request.auth.uid == userId;
+      allow write: if request.resource.metadata.userId == userId;  // request.resource is the resource being written, resource is what already exists (which on first write will be null)
+    }
+  }
+}

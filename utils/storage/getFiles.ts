@@ -1,10 +1,10 @@
 import * as admin from 'firebase-admin'
 
-export const getFiles = (name) => {
+export const getFiles = (path) => {
   return admin
     .storage()
-    .bucket(name)
-    .getFiles()
+    .bucket()
+    .getFiles(path)
     .catch((error) => {
       throw error
     })
