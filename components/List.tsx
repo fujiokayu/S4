@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 
 const List = (props) => {
-  const fetcher = (url, token, id) =>
+  const fetcher = (url, token) =>
   fetch(url, {
     method: 'GET',
     headers: new Headers({ 'Content-Type': 'application/json', token }),
