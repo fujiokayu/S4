@@ -19,8 +19,7 @@ const List = (props) => {
         <div>
           {data.fileList.length > 0 ? (
             data.fileList.map((file) => (
-              //Todo: it's not unique key
-              <ul><li key={file.name}>{file.name}</li></ul>
+              <li key={file.metadata.id.toString()}>{file.name}</li>
             ))
           ) : (
             <p>no files</p>
