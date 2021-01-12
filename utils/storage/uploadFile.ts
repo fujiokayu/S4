@@ -1,8 +1,7 @@
 import * as admin from 'firebase-admin'
 
-export const uploadFile = (path, source) => {
-  console.log(path)
-  return admin
+export const uploadFile = async (path, source) => {
+  return await admin
     .storage()
     .bucket()
     .file(path)
