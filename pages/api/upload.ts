@@ -1,6 +1,5 @@
 import { verifyIdToken } from '../../utils/auth/firebaseAdmin'
 import { uploadFile } from '../../utils/storage/uploadFile'
-import { Buffer } from 'buffer';
 
 const upload = async (req, res) => {
   const token = req.headers.token
