@@ -24,7 +24,8 @@ const Index = () => {
 
   return (
     <div>
-      <div>
+      <div class="siimple-jumbotron-title">Welcome page</div>
+      <div class="siimple-jumbotron-detail">
         <p>You're signed in. Email: {user.email}</p>
         <p
           style={{
@@ -38,14 +39,14 @@ const Index = () => {
           Log out
         </p>
       </div>
-      <div>
+      <div class="siimple-link">
         <Link href={'/example'}>
           <a>Another example page</a>
         </Link>
       </div>
       <List user={user}/>
       <div>
-        <button
+        <button class="siimple-btn siimple-btn--success"
           onClick={() => {
             // Single File Upload
             selectFile({}, ({ source, name, size, file }) => {

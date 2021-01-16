@@ -27,7 +27,7 @@ const Upload = (props) => {
   }
   return (
     <form onSubmit={onSubmit}>
-      <button type="submit">upload</button>
+      <button class="siimple-btn siimple-btn--primary" type="submit">upload</button>
     </form>
   )
 }

@@ -8,6 +8,7 @@ const List = (props) => {
     headers: new Headers({ 'Content-Type': 'application/json', token }),
     credentials: 'same-origin',
   }).then((res) => res.json())
+
   const { data, error } = useSWR(
     props ? ['/api/listFile', props.user.token] : null,
     fetcher
@@ -17,7 +18,7 @@ const List = (props) => {
     <div>
       {error && <div>Failed to fetch files...</div>}
       {data && !error ? (
-        <div>
+        <div class="siimple-list">
           <hr />
           {data.fileList.length > 0 ? (
             data.fileList.map((file) => (
