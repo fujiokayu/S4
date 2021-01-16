@@ -18,11 +18,13 @@ const List = (props) => {
       {error && <div>Failed to fetch files...</div>}
       {data && !error ? (
         <div>
+          <hr />
           {data.fileList.length > 0 ? (
             data.fileList.map((file) => (
               <li key={file.metadata.id.toString()}>
                 {file.name.substring(file.name.indexOf('/')+1)}
                 <Download token={props.user.token} file={file.name.substring(file.name.indexOf('/')+1)}/>
+                <hr />
               </li>
             ))
           ) : (
