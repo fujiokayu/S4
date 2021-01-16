@@ -1,4 +1,5 @@
 import useSWR from 'swr'
+import Download from '../components/Download'
 
 const List = (props) => {
   const fetcher = (url, token) =>
@@ -21,6 +22,7 @@ const List = (props) => {
             data.fileList.map((file) => (
               <li key={file.metadata.id.toString()}>
                 {file.name.substring(file.name.indexOf('/')+1)}
+                <Download token={props.user.token} file={file.name.substring(file.name.indexOf('/')+1)}/>
               </li>
             ))
           ) : (
