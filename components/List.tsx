@@ -23,7 +23,7 @@ const List = (props) => {
           {data.fileList.length > 0 ? (
             data.fileList.map((file) => (
               <li key={file.metadata.id.toString()}>
-                {file.name.substring(file.name.indexOf('/')+1)}
+                {file.name.substring(file.name.indexOf('/')+1)}: {file.metadata.contentType} {Math.round(file.metadata.size / 1024 / 4 * 3)}kb
                 <Download token={props.user.token} file={file.name.substring(file.name.indexOf('/')+1)}/>
                 <hr />
               </li>
