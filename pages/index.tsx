@@ -24,12 +24,11 @@ const Index = () => {
 
   return (
     <div>
-      <div class="siimple-jumbotron-title">Welcome page</div>
+      <div class="siimple-jumbotron-title">Welcome storage</div>
       <div class="siimple-jumbotron-detail">
-        <p>You're signed in. Email: {user.email}</p>
+        <p>signed in : {user.email}</p>
         <p
           style={{
-            display: 'inline-block',
             color: 'blue',
             textDecoration: 'underline',
             cursor: 'pointer',
@@ -38,11 +37,6 @@ const Index = () => {
         >
           Log out
         </p>
-      </div>
-      <div class="siimple-link">
-        <Link href={'/example'}>
-          <a>Another example page</a>
-        </Link>
       </div>
       <List user={user}/>
       <div>
@@ -65,6 +59,12 @@ const Index = () => {
           </div>
         )}
       </div>
+      <div class="siimple-footer" align="center">
+        <Link href={'/example'}>
+          <a>privacy policy</a>
+        </Link>
+      </div>
+
     </div>
   )
 }
