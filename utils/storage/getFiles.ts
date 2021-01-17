@@ -4,7 +4,7 @@ export const getFiles = (path) => {
   return admin
     .storage()
     .bucket()
-    .getFiles(path)
+    .getFiles({ prefix: path })
     .catch((error) => {
       throw error
     })
