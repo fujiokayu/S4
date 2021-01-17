@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-const Example = (props) => {
+const privacyPolicy = (props) => {
   return (
     <div>
       <p>
@@ -14,4 +14,4 @@ const Example = (props) => {
   )
 }
 
-export default Example
+export default privacyPolicy

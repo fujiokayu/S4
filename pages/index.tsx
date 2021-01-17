@@ -43,11 +43,10 @@ const Index = () => {
           justifyContent: "center",
           alignItems: "center"
         }}>
-        <Link href={'/example'}>
+        <Link href={'/privacyPolicy'}>
           <a>privacy policy</a>
         </Link>
       </div>
-
     </div>
   )
 }
