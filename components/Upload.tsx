@@ -7,7 +7,7 @@ const Upload = (props) => {
     noKeyboard: true,
     maxFiles: 1
   })
-  const files = acceptedFiles.map(file => <li key={file.path}>{file.path}</li>);
+  const files = acceptedFiles.map(file => <li key={(file as any).path}>{(file as any).path}</li>);
   console.log(files)
   async function onSubmit(event) {
     event.preventDefault()

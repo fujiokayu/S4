@@ -22,8 +22,8 @@ const Index = () => {
 
   return (
     <div>
-      <div class="siimple-jumbotron-title">Welcome storage</div>
-      <div class="siimple-jumbotron-detail">
+      <div className="siimple-jumbotron-title">Welcome storage</div>
+      <div className="siimple-jumbotron-detail">
         <p>signed in : {user.email}</p>
         <p
           style={{
@@ -37,6 +37,8 @@ const Index = () => {
         </p>
       </div>
       <List user={user}/>
+      <Upload user={user}/>
+      <div className="siimple-footer">
         <Link href={'/example'}>
           <a>privacy policy</a>
         </Link>

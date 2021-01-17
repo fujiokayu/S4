@@ -18,7 +18,7 @@ const List = (props) => {
     <div>
       {error && <div>Failed to fetch files...</div>}
       {data && !error ? (
-        <div class="siimple-list">
+        <div className="siimple-list">
           <hr />
           {data.fileList.length > 0 ? (
             data.fileList.map((file) => (
