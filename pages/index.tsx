@@ -2,12 +2,10 @@ import Link from 'next/link'
 import { useUser } from '../utils/auth/useUser'
 import List from '../components/List'
 import Upload from '../components/Upload'
-import { useFileUpload } from 'use-file-upload'
 
 const Index = () => {
   const { user, logout } = useUser()
-  const [file, selectFile] = useFileUpload()
-
+  
   if (!user) {
     return (
       <>
@@ -39,27 +37,6 @@ const Index = () => {
         </p>
       </div>
       <List user={user}/>
-      <div>
-        <button class="siimple-btn siimple-btn--success"
-          onClick={() => {
-            // Single File Upload
-            selectFile({}, ({ source, name, size, file }) => {
-              // file - is the raw File Object
-            })
-          }}
-        >
-          select file to upload
-        </button>
-
-        {file && (
-          <div>
-            <span> Name: {file.name} </span>
-            <span> Size: {file.size} </span>
-            <Upload user={user} file={file}/>
-          </div>
-        )}
-      </div>
-      <div class="siimple-footer" align="center">
         <Link href={'/example'}>
           <a>privacy policy</a>
         </Link>
