@@ -38,7 +38,11 @@ const Index = () => {
       </div>
       <List user={user}/>
       <Upload user={user}/>
-      <div className="siimple-footer">
+      <div className="siimple-footer" style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}>
         <Link href={'/example'}>
           <a>privacy policy</a>
         </Link>
