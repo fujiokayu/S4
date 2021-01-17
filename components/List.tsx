@@ -1,5 +1,6 @@
 import useSWR from 'swr'
 import Download from '../components/Download'
+import { format } from 'date-fns'
 
 const List = (props) => {
   const fetcher = (url, token) =>
@@ -24,7 +25,7 @@ const List = (props) => {
             data.fileList.map((file) => (
               <li key={file.metadata.id.toString()}>
                 {file.name.substring(file.name.indexOf('/')+1)}: {file.metadata.contentType} {Math.round(file.metadata.size / 1024 / 4 * 3)}kb
-                updated: {file.metadata.updated}
+                last updated: {format(new Date(file.metadata.updated), 'yyyy/MM/dd HH:mm:ss')}
                 <Download token={props.user.token} file={file.name.substring(file.name.indexOf('/')+1)}/>
                 <hr />
               </li>
