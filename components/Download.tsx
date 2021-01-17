@@ -1,4 +1,3 @@
-import axios from 'axios'
 import fileDownload from 'js-file-download'
 
 const Download = (props) => {
