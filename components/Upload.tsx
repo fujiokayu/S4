@@ -17,8 +17,11 @@ const Upload = (props) => {
     if (!blob) {
       return
     }
-    const arrayBuffer = await blob.arrayBuffer();
-    const base64String = btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)));
+    const arrayBuffer = await blob.arrayBuffer()
+    const base64String = new Uint8Array(arrayBuffer).reduce(function (data, byte) {
+      return data + String.fromCharCode(byte)
+    }, '')
+  
     console.log('blob: ',blob)
     const response = await fetch("/api/upload", {
       method: 'POST',
