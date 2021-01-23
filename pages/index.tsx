@@ -22,7 +22,7 @@ const Index = () => {
 
   return (
     <div>
-      <div className="siimple-jumbotron-title">Welcome storage</div>
+      <div className="siimple-jumbotron-title">secure storage</div>
       <div className="siimple-jumbotron-detail">
         <p>signed in : {user.email}</p>
         <p
@@ -44,7 +44,7 @@ const Index = () => {
           alignItems: "center"
         }}>
         <Link href={'/privacyPolicy'}>
-          <a>privacy policy</a>
+          <a className="siimple-paragraph">privacy policy</a>
         </Link>
       </div>
     </div>
