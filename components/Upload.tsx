@@ -44,7 +44,7 @@ const Upload = (props) => {
     }, '')
   
     console.log('blob: ',blob)
-    const response = await fetch("/api/upload", {
+    await fetch("/api/upload", {
       method: 'POST',
       headers: new Headers({ 
         //'Content-Type': 'application/octet-stream', 
@@ -53,10 +53,13 @@ const Upload = (props) => {
       credentials: 'same-origin',
       body: base64String
       // Todo: API resolved without sending a response for /api/upload, this may result in stalled requests.
-    }).catch(error => {
-      console.error(error);
     })
-    console.log('upload responce: ', response)
+    .then(res => {
+      console.log('upload responce: ', res)
+    })
+    .catch(error => {
+      console.error('failed to fetch upload', error);
+    })
   }
 
   return (
@@ -70,10 +73,10 @@ const Upload = (props) => {
           </button>
         </div>
         <aside>
-          <ul>{files}</ul>
+          <ul>{uploadFiles}</ul>
         </aside>
       </section>
-      {files.length > 0 && (
+      {uploadFiles.length > 0 && (
         <form onSubmit={onSubmit}>
           <button className="siimple-btn siimple-btn--primary" type="submit">upload</button>
         </form>
