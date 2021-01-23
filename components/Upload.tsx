@@ -1,19 +1,40 @@
 import {useDropzone} from 'react-dropzone';
-import React from 'react';
+import {useReducer, useState, useCallback} from 'react';
 
 const Upload = (props) => {
-  const {getRootProps, acceptedFiles, getInputProps, open} = useDropzone({
+  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+
+  const [files, setFiles] = useState([])
+
+  const onDrop = useCallback(acceptedFiles => {
+    setFiles([...files, ...acceptedFiles])
+  }, [files])
+
+  const { getRootProps, acceptedFiles, getInputProps, open } = useDropzone({
+    onDrop,
     noClick: true,
     noKeyboard: true,
     maxFiles: 1
   })
-  const files = acceptedFiles.map(file => <li key={(file as any).path}>{(file as any).path}</li>);
-  console.log(files)
+
+  const removeFile = file => () => {
+    const newFiles = [...files]
+    newFiles.splice(newFiles.indexOf(file), 1)
+    setFiles(newFiles)
+  }
+
+
+  const uploadFiles = files.map(file => (
+    <li key={file.path}>
+      {file.path} - {file.size} bytes{" "}
+      <button className="siimple-btn siimple-btn--error" onClick={removeFile(file)}>Remove File</button>
+    </li>
+  ))
+
   async function onSubmit(event) {
     event.preventDefault()
-
     const blob: File = acceptedFiles[0]
-    acceptedFiles[0] = null
+
     if (!blob) {
       return
     }
