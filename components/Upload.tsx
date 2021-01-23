@@ -23,6 +23,9 @@ const Upload = (props) => {
     setFiles(newFiles)
   }
 
+  const removeAll = () => {
+    setFiles([])
+  }
 
   const uploadFiles = files.map(file => (
     <li key={file.path}>
@@ -55,6 +58,7 @@ const Upload = (props) => {
       // Todo: API resolved without sending a response for /api/upload, this may result in stalled requests.
     })
     .then(res => {
+      removeAll()
       console.log('upload responce: ', res)
     })
     .catch(error => {
