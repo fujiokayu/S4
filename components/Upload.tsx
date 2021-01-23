@@ -30,7 +30,7 @@ const Upload = (props) => {
   const uploadFiles = files.map(file => (
     <li key={file.path}>
       {file.path} - {file.size} bytes{" "}
-      <button className="siimple-btn siimple-btn--error" onClick={removeFile(file)}>Remove File</button>
+      <button className="siimple-btn siimple-btn--error" onClick={removeFile(file)}>取り消す</button>
     </li>
   ))
 
@@ -71,9 +71,9 @@ const Upload = (props) => {
       <section className="container">
         <div {...getRootProps({className: 'dropzone'})}>
           <input {...getInputProps()} />
-          <p>Drag and Drop file here</p>
+          <p>アップロードするファイルをドラッグアンドドロップしてください</p>
           <button className="siimple-btn siimple-btn--success" type="button" onClick={open}>
-            ファイルを選択する
+            ファイルダイアログを開く
           </button>
         </div>
         <aside>
@@ -82,7 +82,7 @@ const Upload = (props) => {
       </section>
       {uploadFiles.length > 0 && (
         <form onSubmit={onSubmit}>
-          <button className="siimple-btn siimple-btn--primary" type="submit">upload</button>
+          <button className="siimple-btn siimple-btn--primary" type="submit">アップロードする</button>
         </form>
       )}
     </div>

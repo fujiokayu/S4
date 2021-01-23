@@ -31,7 +31,7 @@ const List = (props) => {
               </li>
             ))
           ) : (
-            <p>no files</p>
+            <p>アップロードされたファイルはありません</p>
           )}
         </div>
       ) : (
