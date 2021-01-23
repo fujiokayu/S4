@@ -73,7 +73,7 @@ const Upload = (props) => {
           <input {...getInputProps()} />
           <p>Drag and Drop file here</p>
           <button className="siimple-btn siimple-btn--success" type="button" onClick={open}>
-            Open File Dialog
+            ファイルを選択する
           </button>
         </div>
         <aside>
