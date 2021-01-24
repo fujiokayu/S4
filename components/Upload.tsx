@@ -1,9 +1,11 @@
 import {useDropzone} from 'react-dropzone';
 import {useReducer, useState, useCallback} from 'react';
 
-const Upload = (props) => {
-  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+function _refreshPage() {
+  window.location.reload()
+}
 
+const Upload = (props) => {
   const [files, setFiles] = useState([])
 
   const onDrop = useCallback(acceptedFiles => {
@@ -58,7 +60,7 @@ const Upload = (props) => {
       // Todo: API resolved without sending a response for /api/upload, this may result in stalled requests.
     })
     .then(res => {
-      removeAll()
+      _refreshPage()
       console.log('upload responce: ', res)
     })
     .catch(error => {
