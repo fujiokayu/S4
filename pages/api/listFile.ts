@@ -1,13 +1,19 @@
 import { verifyIdToken } from '../../utils/auth/firebaseAdmin'
 import { getFiles } from '../../utils/storage/getFiles'
+import * as admin from 'firebase-admin'
 
 const listFile = async (req, res) => {
   const token = req.headers.token
 
   try {
-    const verifideToken = await verifyIdToken(token)
-    
-    const [files] = await getFiles(verifideToken.uid)
+    const verifiedToken = await verifyIdToken(token)
+    const user = await admin.auth().getUser(verifiedToken.uid)
+    let path: string = verifiedToken.uid
+    if (user.customClaims && user.customClaims.admin === true) {
+      path = ''
+    }
+
+    const [files] = await getFiles(path)
     return res.status(200).json({
       fileList: files
     })
