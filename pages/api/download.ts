@@ -25,7 +25,7 @@ const download = async (req, res) => {
     return res.status(200).send(base64String)
   } catch (error) {
     console.log(error)
-    return res.status(401).send('You are unauthorised')
+    return res.status(500).send('download error: ', error.massage)
   }
 }
 
