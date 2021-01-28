@@ -9,9 +9,9 @@ const Index = () => {
   if (!user) {
     return (
       <>
-        <p>Hi there!</p>
-        <p>
-          You are not signed in.{' '}
+        <p className="siimple-jumbotron-title">Sign in してからご利用ください。</p>
+        <p className="siimple-tip siimple-tip--warning siimple-tip--exclamation">
+          email に送られた確認コードにアクセスしていない場合もこのページが表示されます。{' '}
           <Link href={'/auth'}>
             <a>Sign in</a>
           </Link>

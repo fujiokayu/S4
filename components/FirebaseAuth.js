@@ -21,9 +21,23 @@ const firebaseAuthConfig = {
   signInSuccessUrl: '/',
   credentialHelper: 'none',
   callbacks: {
-    signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
-      const userData = await mapUserData(user)
-      setUserCookie(userData)
+    signInSuccessWithAuthResult: async ( { user }, redirectUrl ) => {
+      if ( firebase.auth().currentUser.emailVerified ) {
+        const userData = await mapUserData( user )
+        setUserCookie( userData )
+        return
+      }
+      await firebase.auth().currentUser.sendEmailVerification()
+      firebase
+        .auth()
+        .signOut()
+        .then( () => {
+          // Sign-out successful.
+          router.push( '/auth' )
+        } )
+        .catch( ( e ) => {
+          console.error( e )
+        } )
     },
   },
 }
