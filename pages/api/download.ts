@@ -17,7 +17,11 @@ const download = async (req, res) => {
       return res.status(401).send('You are unauthorised')
     }
 
-    const data = await downloadFile(fileName)
+    const file = fileName.replace(/^.*[\\\/]/, '')
+
+    const filePath = parent + '/' + file
+    console.log(filePath)
+    const data = await downloadFile(filePath)
     const base64String = data.toString()
 
     console.log(base64String.length)
