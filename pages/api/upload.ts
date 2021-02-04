@@ -3,13 +3,14 @@ import { uploadFile } from '../../utils/storage/uploadFile'
 
 const upload = async (req, res) => {
   const token = req.headers.token
-  const name = req.headers.name
+  const file = req.headers.name.replace(/^.*[\\\/]/, '')
   const encodedSource: string = req.body
 
   try {
     const verifideToken = await verifyIdToken(token)
-    const path = verifideToken.uid + '/' + name
+    const path = verifideToken.uid + '/' + file
 
+    console.log('upload path', path)
     return new Promise((resolve, reject) => {
       uploadFile(path, encodedSource)
       .then(response => {
