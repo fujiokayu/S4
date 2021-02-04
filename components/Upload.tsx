@@ -1,5 +1,5 @@
 import {useDropzone} from 'react-dropzone';
-import {useReducer, useState, useCallback} from 'react';
+import {useState, useCallback} from 'react';
 
 function _refreshPage() {
   window.location.reload()
@@ -49,15 +49,18 @@ const Upload = (props) => {
     }, '')
   
     console.log('blob: ',blob)
-    await fetch("/api/upload", {
+    const response = await fetch("/api/getUploadURL", {
       method: 'POST',
       headers: new Headers({ 
         //'Content-Type': 'application/octet-stream', 
-        'token': props.user.token, 
         'name': blob.name}),
-      credentials: 'same-origin',
-      body: base64String
-      // Todo: API resolved without sending a response for /api/upload, this may result in stalled requests.
+      credentials: 'same-origin'
+    })
+    const { url, fields } = await response.json()
+    console.log('url: ',url)
+    await fetch(url, {
+      method: 'POST',
+      body: base64String,
     })
     .then(res => {
       _refreshPage()
