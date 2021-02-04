@@ -7,7 +7,6 @@ const Download = (props) => {
       const response = await fetch("/api/download", {
         method: 'GET',
         headers: new Headers({ 
-          'token': props.token, 
           'fileName': props.file.name}),
         credentials: 'same-origin',
         // Todo: API resolved without sending a response for /api/upload, this may result in stalled requests.

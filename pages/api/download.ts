@@ -1,27 +1,20 @@
-import { verifyIdToken } from '../../utils/auth/firebaseAdmin'
-import { downloadFile } from '../../utils/storage/downloadFile'
-import * as admin from 'firebase-admin'
+import { Storage } from '@google-cloud/storage';
 
 const download = async (req, res) => {
-  const token: string = req.headers.token
   const fileName: string = req.headers.filename
 
   try {
-    const verifiedToken = await verifyIdToken(token)
-    const user = await admin.auth().getUser(verifiedToken.uid)
+    const storage = new Storage({
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+      credentials: {
+        client_email: process.env.FIREBASE_CLIENT_EMAIL,
+        private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      },
+    });
+    const bucket = storage.bucket(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET);
+    const file = bucket.file(fileName);
 
-    const parent = fileName.replace(/\/[^\/]+$/, '')
-
-    // customClaims.admin、もしくは uid がフォルダ名と一致した時はダウンロードを許可する
-    if (!(user.customClaims && user.customClaims.admin === true || parent === verifiedToken.uid)) {
-      return res.status(401).send('You are unauthorised')
-    }
-
-    const file = fileName.replace(/^.*[\\\/]/, '')
-
-    const filePath = parent + '/' + file
-    console.log(filePath)
-    const data = await downloadFile(filePath)
+    const data = await file.download()
     const base64String = data.toString()
 
     console.log(base64String.length)
