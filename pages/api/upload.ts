@@ -25,7 +25,6 @@ const upload = async (req, res) => {
         return reject()
       })
     })
-
   } catch (error) {
     console.log(error)
     return res.status(401).send('You are unauthorised')
