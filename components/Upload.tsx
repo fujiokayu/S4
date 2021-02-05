@@ -49,18 +49,15 @@ const Upload = (props) => {
     }, '')
   
     console.log('blob: ',blob)
-    const response = await fetch("/api/getUploadURL", {
+    await fetch("/api/upload", {
       method: 'POST',
       headers: new Headers({ 
         //'Content-Type': 'application/octet-stream', 
+        'token': props.user.token, 
         'name': blob.name}),
-      credentials: 'same-origin'
-    })
-    const { url, fields } = await response.json()
-    console.log('url: ',url)
-    await fetch(url, {
-      method: 'POST',
-      body: base64String,
+      credentials: 'same-origin',
+      body: base64String
+      // Todo: API resolved without sending a response for /api/upload, this may result in stalled requests.
     })
     .then(res => {
       _refreshPage()
