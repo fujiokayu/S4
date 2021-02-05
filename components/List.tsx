@@ -1,5 +1,6 @@
 import useSWR from 'swr'
 import Download from '../components/Download'
+import Delete from '../components/Delete'
 import { format } from 'date-fns'
 
 const List = (props) => {
@@ -15,6 +16,7 @@ const List = (props) => {
     fetcher
   )
 
+  console.log('data: ', data)
   return (
     <div>
       {error && <div>Failed to fetch files...</div>}
@@ -27,6 +29,7 @@ const List = (props) => {
                 {file.name.substring(file.name.indexOf('/')+1)}: {file.metadata.contentType} {Math.round(file.metadata.size / 1024 / 4 * 3)}kb
                 last updated: {format(new Date(file.metadata.updated), 'yyyy/MM/dd HH:mm:ss')}
                 <Download token={props.user.token} file={file}/>
+                <Delete token={props.user.token} file={file}/>
                 <hr />
               </li>
             ))
