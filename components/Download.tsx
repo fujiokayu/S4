@@ -26,8 +26,8 @@ const Download = (props) => {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <button className="siimple-btn siimple-btn--light" type="submit">download</button>
+    <form onSubmit={onSubmit} >
+      <button className="siimple--float-left siimple-btn siimple-btn--light" type="submit">download</button>
     </form>
   )
 }
