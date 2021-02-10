@@ -39,26 +39,20 @@ const Upload = (props) => {
   async function onSubmit(event) {
     event.preventDefault()
     const blob: File = acceptedFiles[0]
+    const body = new FormData();
 
-    if (!blob) {
-      return
+    for (let index = 0; index <= acceptedFiles.length; index++) {
+      const element = acceptedFiles[index];
+      body.append('file', element)
     }
-    const arrayBuffer = await blob.arrayBuffer()
-    const base64String = new Uint8Array(arrayBuffer).reduce(function (data, byte) {
-      return data + String.fromCharCode(byte)
-    }, '')
-  
-    console.log('blob: ',blob)
-    await fetch("/api/upload", {
-      method: 'POST',
+
+    fetch("/api/upload", {
+      method: "POST",
       headers: new Headers({ 
-        //'Content-Type': 'application/octet-stream', 
         'token': props.user.token, 
         'name': blob.name}),
-      credentials: 'same-origin',
-      body: base64String
-      // Todo: API resolved without sending a response for /api/upload, this may result in stalled requests.
-    })
+      body
+      })
     .then(res => {
       _refreshPage()
       console.log('upload responce: ', res)

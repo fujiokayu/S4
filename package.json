@@ -10,6 +10,8 @@
     "date-fns": "^2.16.1",
     "firebase": "^7.24.0",
     "firebase-admin": "^9.4.2",
+    "formidable": "^1.2.2",
+    "formidable-serverless": "^1.1.1",
     "js-cookie": "2.2.1",
     "js-file-download": "^0.4.12",
     "next": "latest",
