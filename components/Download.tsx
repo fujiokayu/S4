@@ -1,25 +1,21 @@
+import Axios from 'axios'
 import fileDownload from 'js-file-download'
 
 const Download = (props) => {
   async function onSubmit(event) {
     try {
       event.preventDefault()
-      const response = await fetch("/api/download", {
+      const response = await Axios.get("/api/download", {
         method: 'GET',
-        headers: new Headers({ 
-          'fileName': props.file.name}),
-        credentials: 'same-origin',
-        // Todo: API resolved without sending a response for /api/upload, this may result in stalled requests.
+        headers: {
+          'fileName': props.file.name
+        },
+        responseType: 'blob'
       })
-      const base64String = await response.text()
-      const decodeString = atob(base64String)
-      let array = new Uint8Array(decodeString.length);
-      for (let i = 0; i < decodeString.length; i++){
-          array[i] = decodeString.charCodeAt(i);
-      }
-      const blob = new Blob([array], {type: 'application/octet-stream'});
+      const data = await response.data
+      console.log('data.length: ', data.byteLength)
 
-      fileDownload(blob, props.file.name.substring(props.file.name.indexOf('/')+1));
+      fileDownload(data, props.file.name.substring(props.file.name.indexOf('/')+1));
     } catch (err) {
       console.error(err);
     }

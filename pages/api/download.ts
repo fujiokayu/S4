@@ -1,4 +1,5 @@
-import { getStorage } from '../../utils/storage/firebaseStorage';
+import { getStorage } from '../../utils/storage/firebaseStorage'
+import { Buffer } from 'buffer'
 
 const download = async (req, res) => {
   const fileName: string = req.headers.filename
@@ -9,11 +10,10 @@ const download = async (req, res) => {
     const file = bucket.file(fileName);
 
     const data = await file.download()
-    const base64String = data.toString()
-
-    console.log(base64String.length)
+    const strData = data.toString()
+    console.log('strData.length: ', strData.length)
     // Todo: res.setHeader(Proper Content-Type)
-    return res.status(200).send(base64String)
+    return res.status(200).send(strData)
   } catch (error) {
     console.log(error)
     return res.status(500).send('download error: ', error.massage)
