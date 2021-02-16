@@ -27,6 +27,10 @@ const firebaseAuthConfig = {
         setUserCookie( userData )
         return
       }
+      if ( firebase.auth().currentUser.disabled ) {
+        // should showing 403 Error "you are not invited"
+        return
+      }
       await firebase.auth().currentUser.sendEmailVerification()
       firebase
         .auth()
