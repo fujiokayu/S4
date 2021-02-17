@@ -9,11 +9,9 @@ const download = async (req, res) => {
     const file = bucket.file(fileName);
 
     const data = await file.download()
-    const strData = data.toString()
 
-    console.log('strData.length: ', strData.length)
     // Todo: res.setHeader(Proper Content-Type)
-    return res.status(200).send(strData)
+    return res.status(200).send(data[0])
   } catch (error) {
     console.log(error)
     return res.status(500).send('download error: ', error.massage)
