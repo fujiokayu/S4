@@ -16,10 +16,9 @@ const List = (props) => {
     fetcher
   )
 
-  console.log('data: ', data)
   return (
     <div>
-      {error && <div>Failed to fetch files...</div>}
+      {error && <div>Failed to fetch files... Please reflesh this page</div>}
       {data && !error ? (
         <div className="siimple-list">
           <hr />
