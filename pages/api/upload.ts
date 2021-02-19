@@ -14,14 +14,11 @@ export const config = {
 
 const upload = async (req, res) => {
   try {
-    const file = req.headers.name
-
     const verifideToken = await verifyIdToken(req.headers.token)
-    const path = verifideToken.uid + '/' + file
+    const path = verifideToken.uid
 
     const storage = getStorage()
     const bucket = storage.bucket(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET)
-    const storageFile = bucket.file(path)
 
     return new Promise(async (resolve, reject) => {
       const form = new Formidable.IncomingForm({
@@ -32,6 +29,7 @@ const upload = async (req, res) => {
       form
         .on("file", (name: string, file: File) => {
           const data = fs.readFileSync(file.path);
+          const storageFile = bucket.file(path + '/' + name)
           storageFile.save(data)
         })
         .on("aborted", () => {

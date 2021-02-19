@@ -43,14 +43,14 @@ const Upload = (props) => {
 
     for (let index = 0; index <= acceptedFiles.length; index++) {
       const element = acceptedFiles[index];
-      body.append('file', element)
+      body.append(blob.name, element)
     }
 
     fetch("/api/upload", {
       method: "POST",
       headers: new Headers({ 
-        'token': props.user.token, 
-        'name': blob.name}),
+        'token': props.user.token
+      }),
       body
       })
     .then(res => {
@@ -58,6 +58,7 @@ const Upload = (props) => {
       console.log('upload responce: ', res)
     })
     .catch(error => {
+      alert(error)
       console.error('failed to fetch upload', error);
     })
   }
