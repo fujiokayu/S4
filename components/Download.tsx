@@ -9,12 +9,12 @@ const Download = (props) => {
         method: 'GET',
         responseType: 'arraybuffer',
         headers: {
-          'fileName': props.file.name
+          'fileName': props.file
         }
       })
 
       const data = await response.data
-      fileDownload(data, props.file.name.substring(props.file.name.indexOf('/')+1));
+      fileDownload(data, props.file.substring(props.file.indexOf('/')+1));
     } catch (err) {
       console.error(err);
     }

@@ -2,8 +2,14 @@ import useSWR from 'swr'
 import Download from '../components/Download'
 import Delete from '../components/Delete'
 import { format } from 'date-fns'
+import { useState, useEffect } from 'react';
+import initFirebase from '../utils/firebase/initFirebase'
+import firebase from 'firebase/app'
+
+initFirebase()
 
 const List = (props) => {
+  /*
   const fetcher = (url, token) =>
   fetch(url, {
     method: 'GET',
@@ -15,20 +21,35 @@ const List = (props) => {
     props ? ['/api/listFile', props.user.token] : null,
     fetcher
   )
+*/  
+  const [files, setFiles] = useState(null)
+
+  useEffect(() => {
+    const f = async () => {
+      const listRef = firebase.storage().ref('er3jLUCEjSQ7XHhUmtYg7hvsr9I2')
+      const result = await listRef.listAll()
+      .catch(function(error) {
+        // Uh-oh, an error occurred!
+        console.log(error)
+      })
+      // @ts-ignore
+      setFiles(result.items)
+      console.log(files)
+    }
+    f();
+  }, [])
 
   return (
     <div>
-      {error && <div>Failed to fetch files... Please reflesh this page</div>}
-      {data && !error ? (
+      {files ? (
         <div className="siimple-list">
           <hr />
-          {data.fileList.length > 0 ? (
-            data.fileList.map((file) => (
-              <li key={file.metadata.id.toString()}>
-                {file.name.substring(file.name.indexOf('/')+1)}: {file.metadata.contentType} {Math.round(file.metadata.size / 1024 * 10) / 10}kb
-                last updated: {format(new Date(file.metadata.updated), 'yyyy/MM/dd HH:mm:ss')}
-                <Download token={props.user.token} file={file}/>
-                <Delete token={props.user.token} file={file}/>
+          {files.length > 0 ? (
+            files.map((file) => (
+              <li key={file.name}>
+                {file.name}: 
+                <Download token={props.user.token} file={file.fullPath}/>
+                <Delete token={props.user.token} file={file.fullPath}/>
                 <hr />
               </li>
             ))

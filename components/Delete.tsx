@@ -11,7 +11,7 @@ const Delete = (props) => {
         method: 'DELETE',
         headers: new Headers({ 
           'token': props.token, 
-          'filename': props.file.name}),
+          'filename': props.file}),
         credentials: 'same-origin',
         // Todo: API resolved without sending a response for /api/upload, this may result in stalled requests.
       })
