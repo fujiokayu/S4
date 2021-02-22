@@ -1,4 +1,3 @@
-import useSWR from 'swr'
 import Download from '../components/Download'
 import Delete from '../components/Delete'
 import { format } from 'date-fns'
@@ -9,24 +8,11 @@ import firebase from 'firebase/app'
 initFirebase()
 
 const List = (props) => {
-  /*
-  const fetcher = (url, token) =>
-  fetch(url, {
-    method: 'GET',
-    headers: new Headers({ 'Content-Type': 'application/json', token }),
-    credentials: 'same-origin',
-  }).then((res) => res.json())
-
-  const { data, error } = useSWR(
-    props ? ['/api/listFile', props.user.token] : null,
-    fetcher
-  )
-*/  
   const [files, setFiles] = useState(null)
 
   useEffect(() => {
     const f = async () => {
-      const listRef = firebase.storage().ref('er3jLUCEjSQ7XHhUmtYg7hvsr9I2')
+      const listRef = firebase.storage().ref(props.user.id)
       const result = await listRef.listAll()
       .catch(function(error) {
         // Uh-oh, an error occurred!
