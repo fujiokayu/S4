@@ -1,16 +1,21 @@
 import Axios from 'axios'
 import fileDownload from 'js-file-download'
+import initFirebase from '../utils/firebase/initFirebase'
+import firebase from 'firebase/app'
+
+initFirebase()
 
 const Download = (props) => {
   async function onSubmit(event) {
     try {
       event.preventDefault()
-      const response = await Axios.get("/api/download", {
+      const pathReference = firebase.storage().ref(props.file);
+      const url = await pathReference.getDownloadURL()
+      console.log(url)
+
+      const response = await Axios.get(url, {
         method: 'GET',
         responseType: 'arraybuffer',
-        headers: {
-          'fileName': props.file
-        }
       })
 
       const data = await response.data
