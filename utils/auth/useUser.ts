@@ -13,7 +13,8 @@ import { mapUserData } from './mapUserData'
 interface typeUser {
   id: string,
   email: string,
-  token: string
+  token: string,
+  admin: boolean
 }
 
 
