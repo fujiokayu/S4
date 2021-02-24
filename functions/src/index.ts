@@ -39,9 +39,11 @@ exports.setCustomClaim = functions
 
     if (invitedQuerySnapshot.size > 0) {
       console.log('create user: ', user.email )
+      const date = admin.firestore.Timestamp.fromDate(new Date())
       await userRef.add({
-        id: user.uid,
+        uid: user.uid,
         email: user.email,
+        registered: date,
       })
     }
   })
