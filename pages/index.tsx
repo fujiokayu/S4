@@ -2,10 +2,38 @@ import Link from 'next/link'
 import { useUser } from '../utils/auth/useUser'
 import List from '../components/List'
 import Upload from '../components/Upload'
+import { getUsers } from '../utils/firestore/getUsers'
+import { useState, useEffect } from 'react'
+import Select from 'react-select'
 
 const Index = () => {
   const { user, logout } = useUser()
-  
+  const [options, setOptions] = useState([])
+  const [uid, setUid] = useState<string>()
+
+  const onChange = (value) => {
+    setUid(value.value)
+    console.log(value.value)
+  }
+
+  useEffect(() => {
+    if (user && user.admin && options.length === 0) {
+      console.log('admin')
+      getUsers().then( (list) => {
+        // Sign-out successful.
+        console.log('list', list)
+        list.forEach((row) => {
+          const newValue = { value: row.uid, label: row.email.toLowerCase() }
+          options.push(newValue)
+        })
+      } )
+    }
+    else if (user && !uid) {
+      console.log('elif: ', uid)
+      setUid(user.id)
+    }
+  }, [user])
+
   if (!user) {
     return (
       <>
@@ -19,12 +47,10 @@ const Index = () => {
       </>
     )
   }
-
   return (
     <div>
       <div className="siimple-jumbotron-title">secure storage</div>
       <div className="siimple-jumbotron-detail">
-        <p>signed in : {user.email}</p>
         <p
           style={{
             color: 'blue',
@@ -36,7 +62,16 @@ const Index = () => {
           Log out
         </p>
       </div>
-      <List user={user}/>
+      {options.length > 0 ? (
+          <Select options={options} onChange={(onChange)}/>
+      ) : (
+        <p>signed in : {user.email}</p>
+      )}
+      {uid ? (
+        <List uid={uid} user={user}/>
+      ) : (
+        <div>Loading...</div>
+      )}
       <Upload user={user}/>
       <div className="siimple-footer" style={{
           display: "flex",
