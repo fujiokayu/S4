@@ -3,6 +3,7 @@ import { verifyIdToken } from '../../utils/auth/firebaseAdmin'
 import { File } from "formidable";
 import Formidable from "formidable-serverless";
 import fs from "fs";
+import * as admin from 'firebase-admin'
 
 //https://github.com/vercel/next.js/discussions/11634
 
@@ -14,8 +15,12 @@ export const config = {
 
 const upload = async (req, res) => {
   try {
-    const verifideToken = await verifyIdToken(req.headers.token)
-    const path = verifideToken.uid
+    const decodedToken = await verifyIdToken(req.headers.token)
+    const user = await admin.auth().getUser(decodedToken.uid)
+    let path: string = decodedToken.uid
+    if (user.customClaims && user.customClaims.admin === true) {
+      path = req.headers.uid
+    }
 
     const storage = getStorage()
     const bucket = storage.bucket(process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET)

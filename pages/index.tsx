@@ -3,22 +3,25 @@ import { useUser } from '../utils/auth/useUser'
 import List from '../components/List'
 import Upload from '../components/Upload'
 import { getUsers } from '../utils/firestore/getUsers'
-import { useState, useEffect } from 'react'
+import React from 'react'
 import Select from 'react-select'
+
+export const uidContext = React.createContext('')
 
 const Index = () => {
   const { user, logout } = useUser()
-  const [options, setOptions] = useState([])
-  const [uid, setUid] = useState<string>()
+  const [options, setOptions] = React.useState([])
+  const [uid, setUid] = React.useState<string>()
 
   const onChange = (value) => {
     setUid(value.value)
     console.log(value.value)
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (user && user.admin && options.length === 0) {
       console.log('admin')
+      setUid(user.id)
       getUsers().then( (list) => {
         // Sign-out successful.
         console.log('list', list)
@@ -67,12 +70,10 @@ const Index = () => {
       ) : (
         <p>signed in : {user.email}</p>
       )}
-      {uid ? (
-        <List uid={uid} user={user}/>
-      ) : (
-        <div>Loading...</div>
-      )}
-      <Upload user={user}/>
+      <uidContext.Provider value={uid}>
+        <List user={user}/>
+        <Upload user={user}/>
+      </uidContext.Provider>
       <div className="siimple-footer" style={{
           display: "flex",
           justifyContent: "center",

@@ -1,7 +1,8 @@
 import Download from '../components/Download'
 import Delete from '../components/Delete'
+import { uidContext } from '../pages/index';
 import { format } from 'date-fns'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import initFirebase from '../utils/firebase/initFirebase'
 import firebase from 'firebase/app'
 
@@ -9,21 +10,27 @@ initFirebase()
 
 const List = (props) => {
   const [files, setFiles] = useState(null)
-
+  const uid = useContext(uidContext)
   useEffect(() => {
     const f = async () => {
-      const listRef = firebase.storage().ref(props.user.id)
-      const result = await listRef.listAll()
-      .catch(function(error) {
-        // Uh-oh, an error occurred!
-        console.log(error)
-      })
-      // @ts-ignore
-      setFiles(result.items)
-      console.log(files)
+      console.log('list effect ', uid)
+
+      if (uid) {
+        console.log('list component uid: ', uid)
+
+        const listRef = firebase.storage().ref(uid)
+        const result = await listRef.listAll()
+        .catch(function(error) {
+          console.log(error)
+        })
+  
+        if (result) {
+          setFiles(result.items)
+        }
+      }
     }
     f();
-  }, [])
+  }, [uid])
 
   return (
     <div>

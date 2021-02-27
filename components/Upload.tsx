@@ -1,5 +1,6 @@
 import {useDropzone} from 'react-dropzone';
-import {useState, useCallback} from 'react';
+import {useState, useCallback, useContext} from 'react';
+import { uidContext } from '../pages/index';
 
 function _refreshPage() {
   window.location.reload()
@@ -7,6 +8,7 @@ function _refreshPage() {
 
 const Upload = (props) => {
   const [files, setFiles] = useState([])
+  const uid = useContext(uidContext)
 
   const onDrop = useCallback(acceptedFiles => {
     setFiles([...files, ...acceptedFiles])
@@ -49,7 +51,8 @@ const Upload = (props) => {
     fetch("/api/upload", {
       method: "POST",
       headers: new Headers({ 
-        'token': props.user.token
+        'token': props.user.token,
+        'uid': uid
       }),
       body
       })
