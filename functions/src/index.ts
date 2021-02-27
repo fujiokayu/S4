@@ -37,15 +37,13 @@ exports.setCustomClaim = functions
       await admin.auth().setCustomUserClaims(user.uid, { admin: true })
     }
 
-    if (invitedQuerySnapshot.size > 0) {
-      console.log('create user: ', user.email )
-      const date = admin.firestore.Timestamp.fromDate(new Date())
-      await userRef.add({
-        uid: user.uid,
-        email: user.email,
-        registered: date,
-      })
-    }
+    console.log('create user: ', user.email )
+    const date = admin.firestore.Timestamp.fromDate(new Date())
+    await userRef.add({
+      uid: user.uid,
+      email: user.email,
+      registered: date,
+    })
   })
 /*
 exports.onDeleteUser = functions.auth.user().onDelete((user) => {
