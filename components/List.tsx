@@ -13,11 +13,7 @@ const List = (props) => {
   const uid = useContext(uidContext)
   useEffect(() => {
     const f = async () => {
-      console.log('list effect ', uid)
-
       if (uid) {
-        console.log('list component uid: ', uid)
-
         const listRef = firebase.storage().ref(uid)
         const result = await listRef.listAll()
         .catch(function(error) {
@@ -25,6 +21,7 @@ const List = (props) => {
         })
   
         if (result) {
+          console.log(result)
           setFiles(result.items)
         }
       }
@@ -36,7 +33,6 @@ const List = (props) => {
     <div>
       {files ? (
         <div className="siimple-list">
-          <hr />
           {files.length > 0 ? (
             files.map((file) => (
               <li key={file.name}>

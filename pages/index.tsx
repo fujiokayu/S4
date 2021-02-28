@@ -15,24 +15,21 @@ const Index = () => {
 
   const onChange = (value) => {
     setUid(value.value)
-    console.log(value.value)
   }
 
   React.useEffect(() => {
     if (user && user.admin && options.length === 0) {
-      console.log('admin')
       setUid(user.id)
       getUsers().then( (list) => {
-        // Sign-out successful.
-        console.log('list', list)
         list.forEach((row) => {
+          // ネットワークが遅延して Firestore へのアクセスに時間がかかる場合、
+          // リストの取得中に useEffect が複数回走って重複レコードがインサートされる可能性がある
           const newValue = { value: row.uid, label: row.email.toLowerCase() }
           options.push(newValue)
         })
       } )
     }
     else if (user && !uid) {
-      console.log('elif: ', uid)
       setUid(user.id)
     }
   }, [user])

@@ -11,8 +11,6 @@ interface IUserList {
 
 export const getUsers = async () => {
   try {
-    console.log('getUsers!')
-
     const userQuerySnapshot: any = await userRef.get()
     .catch(function(error) {
       console.error("Error fetching user document: ", error)
@@ -30,7 +28,6 @@ export const getUsers = async () => {
         userList.push(user)
       })
     }
-    console.log('userList: ', userList)  
     return userList
   } catch(error) {
     console.log(error)
