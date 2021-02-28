@@ -11,10 +11,10 @@ initFirebase()
 const List = (props) => {
   const [files, setFiles] = useState([])
   const uid = useContext(uidContext)
-
+  console.log(uid)
   useEffect(() => {
     const f = async () => {
-      if (!uid || files.length > 0) {
+      if (!uid) {
         return 
       }
 
@@ -26,10 +26,17 @@ const List = (props) => {
   
       if (result) {
         let fileList = [...files]
+        fileList = []
         result.items.forEach(element => {
           const fileRef = firebase.storage().ref(uid).child(element.name)
           fileRef.getMetadata().then(function(metadata) {
-            const item = { name: element.name, contentType: metadata.contentType, size: metadata.size, updated: metadata.updated, md5Hash: metadata.md5Hash }
+            const item = { 
+              name: element.name,
+              contentType: metadata.contentType,
+              size: metadata.size,
+              updated: metadata.updated,
+              md5Hash: metadata.md5Hash,
+              fullPath: metadata.fullPath}
             fileList.push(item)
           }).catch(function(error) {
             alert('getMetadata error: ' + error)
