@@ -48,13 +48,16 @@ const List = (props) => {
         <div className="siimple-list">
           {files.length > 0 ? (
             files.map((file) => (
+              <div>{file.name}
               <li key={file.md5Hash}>
-                {file.name}: {file.contentType} {Math.round(file.size / 1024 * 10) / 10}kb　<br />
-                last updated: {format(new Date(file.updated), 'yyyy/MM/dd HH:mm:ss')}
+                content type: {file.contentType}
+                <li> size: {Math.round(file.size / 1024 * 10) / 10}kb</li>
+                <li>last updated: {format(new Date(file.updated), 'yyyy/MM/dd HH:mm:ss')}</li>
                 <Download token={props.user.token} file={file.fullPath}/>
                 <Delete token={props.user.token} file={file.fullPath}/>
                 <hr />
               </li>
+              </div>
             ))
           ) : (
             <p>アップロードされたファイルはありません</p>
