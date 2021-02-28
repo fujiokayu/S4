@@ -12,18 +12,17 @@ const Index = () => {
   const { user, logout } = useUser()
   const [options, setOptions] = React.useState([])
   const [uid, setUid] = React.useState<string>()
-
+  let locked = false
   const onChange = (value) => {
     setUid(value.value)
   }
 
   React.useEffect(() => {
-    if (user && user.admin && options.length === 0) {
+    if (user && user.admin && options.length === 0 && !locked) {
+      locked = true
       setUid(user.id)
       getUsers().then( (list) => {
         list.forEach((row) => {
-          // ネットワークが遅延して Firestore へのアクセスに時間がかかる場合、
-          // リストの取得中に useEffect が複数回走って重複レコードがインサートされる可能性がある
           const newValue = { value: row.uid, label: row.email.toLowerCase() }
           options.push(newValue)
         })
