@@ -8,10 +8,18 @@ import firebase from 'firebase/app'
 
 initFirebase()
 
+const useForceUpdate = () => {
+	const [count, setCount] = useState(0)
+	
+	const increment = () => setCount(prevCount => prevCount + 1)
+	return [increment, count]
+}
+
 const List = (props) => {
   const [files, setFiles] = useState([])
+  const [forceUpdate] = useForceUpdate()
+
   const uid = useContext(uidContext)
-  console.log(uid)
   useEffect(() => {
     const f = async () => {
       if (!uid) {
@@ -26,7 +34,7 @@ const List = (props) => {
   
       if (result) {
         let fileList = [...files]
-        fileList = []
+        fileList.splice(0)
         result.items.forEach(element => {
           const fileRef = firebase.storage().ref(uid).child(element.name)
           fileRef.getMetadata().then(function(metadata) {
@@ -44,6 +52,7 @@ const List = (props) => {
         })
         console.log('set', fileList)
         setFiles(fileList)
+        forceUpdate
       }
     }
     f();
