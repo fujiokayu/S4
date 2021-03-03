@@ -8,16 +8,9 @@ import firebase from 'firebase/app'
 
 initFirebase()
 
-const useForceUpdate = () => {
-	const [count, setCount] = useState(0)
-	
-	const increment = () => setCount(prevCount => prevCount + 1)
-	return [increment, count]
-}
-
 const List = (props) => {
   const [files, setFiles] = useState([])
-  const [forceUpdate] = useForceUpdate()
+  const [loaded, setLoaded] = useState(false)
 
   const uid = useContext(uidContext)
   useEffect(() => {
@@ -26,6 +19,7 @@ const List = (props) => {
         return 
       }
 
+      setLoaded(false)
       const listRef = firebase.storage().ref(uid)
       const result = await listRef.listAll()
       .catch(function(error) {
@@ -52,7 +46,7 @@ const List = (props) => {
         })
         console.log('set', fileList)
         setFiles(fileList)
-        forceUpdate
+        setLoaded(true)
       }
     }
     f();
@@ -60,7 +54,7 @@ const List = (props) => {
 
   return (
     <div>
-      {files ? (
+      {files && loaded ? (
         <div className="siimple-list">
           {files.length > 0 ? (
             files.map((file) => (
