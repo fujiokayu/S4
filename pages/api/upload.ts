@@ -29,13 +29,13 @@ const upload = async (req, res) => {
       const form = new Formidable.IncomingForm({
         multiples: true,
         keepExtensions: true,
-      });
+      })
   
       form
-        .on("file", (name: string, file: File) => {
+        .on("file", async (name: string, file: File) => {
           const data = fs.readFileSync(file.path);
           const storageFile = bucket.file(path + '/' + name)
-          storageFile.save(data)
+          await storageFile.save(data)
         })
         .on("aborted", () => {
           reject(res.status(500).send('Aborted'))  
