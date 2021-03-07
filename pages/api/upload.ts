@@ -36,13 +36,14 @@ const upload = async (req, res) => {
           const data = fs.readFileSync(file.path);
           const storageFile = bucket.file(path + '/' + name)
           await storageFile.save(data)
+          resolve(res.status(200).send('done'))
         })
         .on("aborted", () => {
           reject(res.status(500).send('Aborted'))  
         })
-        .on("end", () => {
-          resolve(res.status(200).send('done'));
-        });
+        //.on("end", () => {
+        //  resolve(res.status(200).send('done'))
+        //})
 
         await form.parse(req)
     })
