@@ -8,8 +8,8 @@ import firebase from 'firebase/app'
 
 initFirebase()
 
-const List = (props) => {
   const [files, setFiles] = useState([])
+const List = () => {
   const [loaded, setLoaded] = useState(false)
 
   const uid = useContext(uidContext)
@@ -66,8 +66,8 @@ const List = (props) => {
                 <li key={file.md5Hash}>content type: {file.contentType}</li>
                 <li>size: {Math.round(file.size / 1024 * 10) / 10}kb</li>
                 <li>last updated: {format(new Date(file.updated), 'yyyy/MM/dd HH:mm:ss')}</li>
-                <Download token={props.user.token} file={file.fullPath}/>
-                <Delete token={props.user.token} file={file.fullPath}/>
+                <Download file={file.fullPath}/>
+                <Delete file={file.fullPath}/>
                 <hr />
               
               </ul>

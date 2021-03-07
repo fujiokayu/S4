@@ -67,8 +67,8 @@ const Index = () => {
         <p>signed in : {user.email}</p>
       )}
       <uidContext.Provider value={uid}>
-        <List user={user}/>
         <Upload user={user}/>
+        <List />
       </uidContext.Provider>
       <div className="siimple-footer" style={{
           display: "flex",
