@@ -7,9 +7,17 @@ import initFirebase from '../utils/firebase/initFirebase'
 import firebase from 'firebase/app'
 
 initFirebase()
+interface IFiles {
+	name: string,
+	contentType: string,
+	size: number,
+	updated: Date,
+	md5Hash: string,
+	fullPath: string
+}
 
-  const [files, setFiles] = useState([])
 const List = () => {
+  const [files, setFiles] = useState<IFiles[]>([])
   const [loaded, setLoaded] = useState(false)
 
   const uid = useContext(uidContext)
@@ -29,29 +37,25 @@ const List = () => {
       if (!result) {
         return
       }
-
-      let fileList = [...files]
-      fileList.splice(0)
-      result.items.forEach(element => {
+      files.splice(0)
+      result.items.forEach(async element => {
         const fileRef = firebase.storage().ref(uid).child(element.name)
-        fileRef.getMetadata().then(function(metadata) {
-          const item = { 
+        await fileRef.getMetadata().then(function(metadata) {
+          const item: IFiles = { 
             name: element.name,
             contentType: metadata.contentType,
             size: metadata.size,
             updated: metadata.updated,
             md5Hash: metadata.md5Hash,
             fullPath: metadata.fullPath}
-          fileList.push(item)
+            files.push(item)
         }).catch(function(error) {
           alert('getMetadata error: ' + error)
         })
       })
-      console.log('set', fileList)
-      setFiles(fileList)
       setLoaded(true)
     }
-    f();
+    f()
   }, [uid])
 
   return (
