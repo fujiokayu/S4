@@ -51,7 +51,7 @@ const Upload = (props) => {
     fetch("/api/upload", {
       method: "POST",
       headers: new Headers({ 
-        'token': props.user.token,
+        'token': props.token,
         'uid': uid
       }),
       body
