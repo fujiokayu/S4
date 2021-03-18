@@ -3,10 +3,8 @@ import Delete from '../components/Delete'
 import { uidContext } from '../pages/index';
 import { format } from 'date-fns'
 import { useState, useEffect, useContext } from 'react';
-import initFirebase from '../utils/firebase/initFirebase'
 import firebase from 'firebase/app'
 
-initFirebase()
 interface IFiles {
 	name: string,
 	contentType: string,
