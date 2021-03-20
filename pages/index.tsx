@@ -3,21 +3,22 @@ import { useUser } from '../utils/auth/useUser'
 import List from '../components/List'
 import Upload from '../components/Upload'
 import { getUsers } from '../utils/firestore/getUsers'
-import React from 'react'
+import {useState, useEffect, createContext} from 'react'
 import Select from 'react-select'
 
-export const uidContext = React.createContext('')
+export const uidContext = createContext('')
 
 const Index = () => {
   const { user, logout } = useUser()
-  const [options, setOptions] = React.useState([])
-  const [uid, setUid] = React.useState<string>()
+  const [options, setOptions] = useState([])
+  const [uid, setUid] = useState<string>()
   let locked = false
   const onChange = (value) => {
     setUid(value.value)
   }
 
-  React.useEffect(() => {
+  // Init ui
+  useEffect(() => {
     if (user && user.admin && options.length === 0 && !locked) {
       locked = true
       setUid(user.id)
@@ -46,6 +47,9 @@ const Index = () => {
       </>
     )
   }
+
+  const token = user.token
+
   return (
     <div>
       <div className="siimple-jumbotron-title">secure storage</div>
@@ -67,8 +71,8 @@ const Index = () => {
         <p>signed in : {user.email}</p>
       )}
       <uidContext.Provider value={uid}>
-        <Upload user={user}/>
         <List />
+        <Upload token={token}/>
       </uidContext.Provider>
       <div className="siimple-footer" style={{
           display: "flex",
