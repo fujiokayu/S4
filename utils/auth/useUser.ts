@@ -17,7 +17,6 @@ interface typeUser {
   admin: boolean
 }
 
-
 initFirebase()
 
 const useUser = () => {
@@ -50,7 +49,13 @@ const useUser = () => {
           setUser( userData )
         } else {
           removeUserCookie()
-          setUser(null)
+          // ユーザーが存在しないときは空の typeUser を設定するように修正
+          setUser({
+            id: "",
+            email: "",
+            token: "",
+            admin: false         
+          })
         }
       } )
 
