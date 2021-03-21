@@ -35,8 +35,9 @@ const List = () => {
       if (!result) {
         return
       }
+
       files.splice(0)
-      result.items.forEach(async element => {
+      await Promise.all(result.items.map(async element => {
         const fileRef = firebase.storage().ref(uid).child(element.name)
         await fileRef.getMetadata().then(function(metadata) {
           const item: IFiles = { 
@@ -50,17 +51,24 @@ const List = () => {
         }).catch(function(error) {
           alert('getMetadata error: ' + error)
         })
-      })
+      }))
       setLoaded(true)
     }
     f()
   }, [uid])
 
+  if (!loaded) {
+    return (
+      <>
+        <p className="siimple-tip siimple-tip--warning siimple-tip--exclamation">
+        Loading files...</p>
+      </>
+    )
+  }
+
   return (
-    <div>
-      {files && loaded ? (
-        <div className="siimple-list">
-          {files.length > 0 ? (
+    <div className="siimple-list">
+    {files.length > 0 ? (
             files.map((file) => (
               <ul>
                 {file.name}
@@ -71,16 +79,11 @@ const List = () => {
                 <Download file={file.fullPath}/>
                 <Delete file={file.fullPath}/>
                 <hr />
-              
               </ul>
             ))
-          ) : (
-            <p>アップロードされたファイルはありません</p>
-          )}
-        </div>
       ) : (
-        <div>Loading...</div>
-      )}
+        <p>アップロードされたファイルはありません</p>
+        )}
     </div>
   )
 }
