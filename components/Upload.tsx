@@ -3,6 +3,7 @@ import {useState, useCallback, useContext} from 'react';
 import { uidContext } from '../pages/index';
 import initFirebase from '../utils/firebase/initFirebase'
 import firebase from 'firebase/app'
+import Progress from '../components/Progress';
 
 initFirebase()
 
@@ -12,6 +13,7 @@ function _refreshPage() {
 
 const Upload = (props) => {
   const [files, setFiles] = useState([])
+  const [progress, setProgress] = useState(0)
   const uid = useContext(uidContext)
 
   const onDrop = useCallback(acceptedFiles => {
@@ -39,23 +41,35 @@ const Upload = (props) => {
     <li key={file.path}>
       {file.path} - {file.size} bytes{" "}
       <button className="siimple-btn siimple-btn--error" onClick={removeFile(file)}>取り消す</button>
+      <Progress percent={progress}/>
     </li>
   ))
 
   async function onSubmit(event) {
     event.preventDefault()
+    setProgress(0)
+
     const blob: File = acceptedFiles[0]
     const filePath = uid + '/' + acceptedFiles[0].name
 
     const storageRef = firebase.storage().ref()
     const uploadRef = storageRef.child(filePath)
-    uploadRef.put(blob)
-      .then(function(snapshot) {
-        _refreshPage()
-    })
-    .catch(error => {
-      alert(error)
-      console.error('failed to upload', error);
+    const uploadTask = uploadRef.put(blob)
+    uploadTask.on('state_changed', function(snapshot){
+      const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
+      setProgress(percent)
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+          console.log('Upload is paused')
+          break
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+          break
+      }
+    }, function(error) {
+      alert('failed to upload: ' + error)
+    }, function() {
+      console.log('Upload is done')
+      _refreshPage()
     })
   }
 
