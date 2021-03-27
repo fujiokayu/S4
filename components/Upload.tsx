@@ -1,6 +1,10 @@
 import {useDropzone} from 'react-dropzone';
 import {useState, useCallback, useContext} from 'react';
 import { uidContext } from '../pages/index';
+import initFirebase from '../utils/firebase/initFirebase'
+import firebase from 'firebase/app'
+
+initFirebase()
 
 function _refreshPage() {
   window.location.reload()
@@ -41,28 +45,17 @@ const Upload = (props) => {
   async function onSubmit(event) {
     event.preventDefault()
     const blob: File = acceptedFiles[0]
-    const body = new FormData();
+    const filePath = uid + '/' + acceptedFiles[0].name
 
-    for (let index = 0; index <= acceptedFiles.length; index++) {
-      const element = acceptedFiles[index];
-      body.append(blob.name, element)
-    }
-
-    fetch("/api/upload", {
-      method: "POST",
-      headers: new Headers({ 
-        'token': props.token,
-        'uid': uid
-      }),
-      body
-      })
-    .then(res => {
-      _refreshPage()
-      console.log('upload responce: ', res)
+    const storageRef = firebase.storage().ref()
+    const uploadRef = storageRef.child(filePath)
+    uploadRef.put(blob)
+      .then(function(snapshot) {
+        _refreshPage()
     })
     .catch(error => {
       alert(error)
-      console.error('failed to fetch upload', error);
+      console.error('failed to upload', error);
     })
   }
 
