@@ -17,7 +17,9 @@ const Upload = () => {
   const uid = useContext(uidContext)
 
   const onDrop = useCallback(acceptedFiles => {
-    setFiles([...files, ...acceptedFiles])
+    const newFiles = [...files]
+    newFiles.splice(0)
+    setFiles([...newFiles, ...acceptedFiles])
   }, [files])
 
   const { getRootProps, acceptedFiles, getInputProps, open } = useDropzone({
@@ -31,10 +33,6 @@ const Upload = () => {
     const newFiles = [...files]
     newFiles.splice(newFiles.indexOf(file), 1)
     setFiles(newFiles)
-  }
-
-  const removeAll = () => {
-    setFiles([])
   }
 
   const uploadFiles = files.map(file => (
