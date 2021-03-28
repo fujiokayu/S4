@@ -14,6 +14,7 @@ interface typeUser {
   id: string,
   email: string,
   token: string,
+  verified: boolean,
   admin: boolean
 }
 
@@ -54,6 +55,7 @@ const useUser = () => {
             id: "",
             email: "",
             token: "",
+            verified: false,
             admin: false         
           })
         }

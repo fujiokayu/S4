@@ -42,7 +42,7 @@ const Index = () => {
       </>
     )
   }
-  if (user.id == ""){
+  if (user.id == "" || (user && !user.verified)){
     return (
       <>
         <p className="siimple-jumbotron-title">Sign in してからご利用ください。</p>
