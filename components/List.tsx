@@ -72,10 +72,9 @@ const List = () => {
             files.map((file) => (
               <ul>
                 {file.name}
-              
                 <li key={file.md5Hash}>content type: {file.contentType}</li>
-                <li>size: {Math.round(file.size / 1024 * 10) / 10}kb</li>
-                <li>last updated: {format(new Date(file.updated), 'yyyy/MM/dd HH:mm:ss')}</li>
+                <li key={file.size}>size: {Math.round(file.size / 1024 * 10) / 10}kb</li>
+                <li key={file.fullPath}>last updated: {format(new Date(file.updated), 'yyyy/MM/dd HH:mm:ss')}</li>
                 <Download file={file.fullPath}/>
                 <Delete file={file.fullPath}/>
                 <hr />

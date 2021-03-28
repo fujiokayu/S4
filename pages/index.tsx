@@ -12,22 +12,20 @@ const Index = () => {
   const { user, logout } = useUser()
   const [options, setOptions] = useState([])
   const [uid, setUid] = useState<string>()
-  let locked = false
   const onChange = (value) => {
     setUid(value.value)
   }
 
   // Init ui
   useEffect(() => {
-    if (user && user.admin && options.length === 0 && !locked) {
-      locked = true
+    if (user && user.admin && options.length === 0) {
       setUid(user.id)
-      getUsers().then( (list) => {
+      getUsers().then((list) => {
         list.forEach((row) => {
           const newValue = { value: row.uid, label: row.email.toLowerCase() }
           options.push(newValue)
         })
-      } )
+      })
     }
     else if (user && !uid) {
       setUid(user.id)
@@ -83,10 +81,10 @@ const Index = () => {
         <Upload />
       </uidContext.Provider>
       <div className="siimple-footer" style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-        }}>
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      }}>
         <Link href={'/privacyPolicy'}>
           <a className="siimple-paragraph">privacy policy</a>
         </Link>

@@ -3,8 +3,6 @@ import fileDownload from 'js-file-download'
 import initFirebase from '../utils/firebase/initFirebase'
 import firebase from 'firebase/app'
 
-initFirebase()
-
 const Download = (props) => {
   async function onSubmit(event) {
     try {

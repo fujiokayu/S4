@@ -7,7 +7,7 @@ import Progress from '../components/Progress';
 
 initFirebase()
 
-function _refreshPage() {
+const _refreshPage = () => {
   window.location.reload()
 }
 

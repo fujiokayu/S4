@@ -4,7 +4,7 @@ import firebase from 'firebase/app'
 initFirebase()
 
 const Delete = (props) => {
-  function _refreshPage() {
+  const _refreshPage = () => {
     window.location.reload()
   }
   
@@ -22,7 +22,7 @@ const Delete = (props) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <button className="siimple-btn siimple-btn--warning" type="submit">delete</button>
+      <button className="siimple-btn siimple-btn--error" type="submit">delete</button>
     </form>
   )
 }

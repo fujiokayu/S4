@@ -34,7 +34,8 @@ exports.setCustomClaim = functions
     }
 
     if (userQuerySnapshot.size > 0) {
-      console.log('existing user: ', user.email, ', skip this insert.')
+      // 既に登録済みのユーザーがサインアップするのは運用上の不整合であるため、エラーレポートを行う
+      console.error('existing user: ', user.email, ', skip this insert.')
       return
     }
 

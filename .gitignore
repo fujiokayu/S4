@@ -36,4 +36,6 @@ yarn-error.log*
 .vercel
 
 # firebase
-ui-debug.log
+*debug.log
+
+.prettierrc
