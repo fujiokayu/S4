@@ -23,6 +23,7 @@ exports.setCustomClaim = functions
   .onCreate(async (user) => {
     const adminQuerySnapshot = await adminRef.where('email', '==', user.email).get()
     const invitedQuerySnapshot = await invitedRef.where('email', '==', user.email).get()
+    const userQuerySnapshot = await userRef.where('email', '==', user.email).get()
 
     // いずれのデータベースにも登録されていないユーザーのサインアップは無効化する
     if ( adminQuerySnapshot.size === 0 && invitedQuerySnapshot.size === 0) {
@@ -30,6 +31,11 @@ exports.setCustomClaim = functions
       .updateUser(user.uid, {disabled: true})
       .then(userRecord => console.log(`Auto blocked user: ${userRecord.toJSON()}`))
       .catch(error => console.log(`Error auto blocking: ${error}`))
+    }
+
+    if (userQuerySnapshot.size > 0) {
+      console.log('existing user: ', user.email, ', skip this insert.')
+      return
     }
 
     if (adminQuerySnapshot.size > 0) {
