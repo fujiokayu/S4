@@ -21,10 +21,12 @@ const Index = () => {
     if (user && user.admin && options.length === 0) {
       setUid(user.id)
       getUsers().then((list) => {
+        const items = []
         list.forEach((row) => {
           const newValue = { value: row.uid, label: row.email.toLowerCase() }
-          options.push(newValue)
+          items.push(newValue)
         })
+        setOptions(Array.from(new Set(items)))
       })
     }
     else if (user && !uid) {
