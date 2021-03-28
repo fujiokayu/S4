@@ -11,7 +11,7 @@ function _refreshPage() {
   window.location.reload()
 }
 
-const Upload = (props) => {
+const Upload = () => {
   const [files, setFiles] = useState([])
   const [progress, setProgress] = useState(0)
   const uid = useContext(uidContext)

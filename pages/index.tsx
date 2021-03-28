@@ -58,8 +58,6 @@ const Index = () => {
     )
   }
 
-  const token = user.token
-
   return (
     <div>
       <div className="siimple-jumbotron-title">secure storage</div>
@@ -82,7 +80,7 @@ const Index = () => {
       )}
       <uidContext.Provider value={uid}>
         <List />
-        <Upload token={token}/>
+        <Upload />
       </uidContext.Provider>
       <div className="siimple-footer" style={{
           display: "flex",
