@@ -85,7 +85,7 @@ const Upload = () => {
       </section>
       {uploadFiles.length > 0 && (
         <form onSubmit={onSubmit}>
-          <button className="siimple-btn siimple-btn--primary" type="submit">アップロードする</button>
+          <button className="siimple-btn siimple-btn--primary" type="submit">アップロード</button>
         </form>
       )}
     </div>

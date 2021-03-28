@@ -22,7 +22,7 @@ const Delete = (props) => {
 
   return (
     <form onSubmit={onSubmit}>
-      <button className="siimple-btn siimple-btn--error" type="submit">delete</button>
+      <button className="siimple-btn siimple-btn--error" type="submit">削除</button>
     </form>
   )
 }

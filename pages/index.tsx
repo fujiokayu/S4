@@ -37,7 +37,7 @@ const Index = () => {
       <>
         <p className="siimple-jumbotron-title">Loading...</p>
           <Link href={'/auth'}>
-            <a>Sign in</a>
+            <a className="siimple-link">Sign in</a>
           </Link>
       </>
     )
@@ -49,7 +49,7 @@ const Index = () => {
         <p className="siimple-tip siimple-tip--warning siimple-tip--exclamation">
           email に送られた確認コードにアクセスしていない場合もこのページが表示されます。{' '}
           <Link href={'/auth'}>
-            <a>Sign in</a>
+            <a className="siimple-link">Sign in</a>
           </Link>
         </p>
       </>
@@ -59,18 +59,9 @@ const Index = () => {
   return (
     <div>
       <div className="siimple-jumbotron-title">secure storage</div>
-      <div className="siimple-jumbotron-detail">
-        <p
-          style={{
-            color: 'blue',
-            textDecoration: 'underline',
-            cursor: 'pointer',
-          }}
-          onClick={() => logout()}
-        >
-          Log out
-        </p>
-      </div>
+      <p className="siimple-link" onClick={() => logout()}>
+        Sign out
+      </p>
       {options.length > 0 ? (
           <Select options={options} onChange={(onChange)}/>
       ) : (
