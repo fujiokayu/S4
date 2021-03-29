@@ -38,9 +38,9 @@ const Index = () => {
     return (
       <>
         <p className="siimple-jumbotron-title">Loading...</p>
-          <Link href={'/auth'}>
-            <a className="siimple-link">Sign in</a>
-          </Link>
+        <Link href={'/auth'}>
+          <a className="siimple-link">Sign in</a>
+        </Link>
       </>
     )
   }
@@ -61,7 +61,7 @@ const Index = () => {
   return (
     <div>
       <div className="siimple-jumbotron-title">secure storage</div>
-      <p className="siimple-link" onClick={() => logout()}>
+      <p className="siimple-btn siimple-btn--success" onClick={() => logout()}>
         Sign out
       </p>
       {options.length > 0 ? (
