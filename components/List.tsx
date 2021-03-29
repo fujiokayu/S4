@@ -68,20 +68,20 @@ const List = () => {
 
   return (
     <div className="siimple-list">
-    {files.length > 0 ? (
-            files.map((file) => (
-              <ul>
-                <span>{file.name}</span> : {file.contentType}
-                <li key={file.size}>ファイルサイズ：{Math.round(file.size / 1024 * 10) / 10}kb</li>
-                <li key={file.fullPath}>ファイル更新日：{format(new Date(file.updated), 'yyyy/MM/dd HH:mm:ss')}</li>
-                <Download file={file.fullPath}/>
-                <Delete file={file.fullPath}/>
-                <hr />
-              </ul>
-            ))
+      {files.length > 0 ? (
+        files.map((file) => (
+          <ul>
+            <span>{file.name}</span> : {file.contentType}
+            <li key={file.size}>ファイルサイズ：{Math.round(file.size / 1024 * 10) / 10}kb</li>
+            <li key={file.fullPath}>ファイル更新日：{format(new Date(file.updated), 'yyyy/MM/dd HH:mm:ss')}</li>
+            <Download file={file.fullPath}/>
+            <Delete file={file.fullPath}/>
+            <hr />
+          </ul>
+        ))
       ) : (
         <p>アップロードされたファイルはありません</p>
-        )}
+      )}
     </div>
   )
 }

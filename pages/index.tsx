@@ -79,7 +79,7 @@ const Index = () => {
         alignItems: "center"
       }}>
         <Link href={'/privacyPolicy'}>
-          <a className="siimple-paragraph">privacy policy</a>
+          <a className="siimple-link">privacy policy</a>
         </Link>
       </div>
     </div>
