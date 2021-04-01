@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { useUser } from '../utils/auth/useUser'
+import WatchLoader from '../components/WatchLoader'
 import List from '../components/List'
 import Upload from '../components/Upload'
 import { getUsers } from '../utils/firestore/getUsers'
@@ -38,6 +39,8 @@ const Index = () => {
     return (
       <>
         <p className="siimple-jumbotron-title">Loading...</p>
+        <WatchLoader />
+        <br/>
         <Link href={'/auth'}>
           <a className="siimple-link">Sign in</a>
         </Link>
