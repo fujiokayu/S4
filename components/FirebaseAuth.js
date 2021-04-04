@@ -14,6 +14,7 @@ const firebaseAuthConfig = {
   // Auth providers
   // https://github.com/firebase/firebaseui-web#configure-oauth-providers
   signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
       requireDisplayName: false,

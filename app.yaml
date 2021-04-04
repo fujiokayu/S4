@@ -1,0 +1,15 @@
+# https://github.com/satococoa/nextjs-appengine-sample/blob/main/app.yaml
+# https://zenn.dev/catnose99/articles/353664a9fe1f0f
+env: standard # スタンダード環境（省略可）
+runtime: nodejs14 # Node.js 14を使う
+instance_class: F1 # デフォルト
+
+service: default # GAEのサービスの名前。
+
+handlers:
+  - url: /.*
+    script: auto
+    secure: always
+
+automatic_scaling:
+  min_instances: 0 # 動かしてないときはインスタンスを0にする
