@@ -14,6 +14,12 @@ gsutil lifecycle set lifecycle.json gs://cloud-storage-id
 gsutil lifecycle get　gs://cloud-storage-id
 ```
 
+## deploy
+
+```bash
+gcloud app deploy app.yaml --project project-id
+```
+
 ---
 
 # Example: Firebase authentication with a serverless API
