@@ -42,6 +42,7 @@ exports.setCustomClaim = functions
     if (adminQuerySnapshot.size > 0) {
       console.log('set admin claim with: ', user.email )
       await admin.auth().setCustomUserClaims(user.uid, { admin: true })
+      return // admin user は user ドキュメントに追加しない
     }
 
     console.log('create user: ', user.email )
