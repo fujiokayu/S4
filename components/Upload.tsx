@@ -1,11 +1,8 @@
 import {useDropzone} from 'react-dropzone';
 import {useState, useCallback, useContext} from 'react';
 import { uidContext } from '../pages/index';
-import initFirebase from '../utils/firebase/initFirebase'
 import firebase from 'firebase/app'
 import Progress from '../components/Progress';
-
-initFirebase()
 
 const _refreshPage = () => {
   window.location.reload()

@@ -1,6 +1,5 @@
 import Axios from 'axios'
 import fileDownload from 'js-file-download'
-import initFirebase from '../utils/firebase/initFirebase'
 import firebase from 'firebase/app'
 
 const Download = (props) => {

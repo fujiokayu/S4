@@ -1,7 +1,4 @@
-import initFirebase from '../utils/firebase/initFirebase'
 import firebase from 'firebase/app'
-
-initFirebase()
 
 const Delete = (props) => {
   const _refreshPage = () => {
