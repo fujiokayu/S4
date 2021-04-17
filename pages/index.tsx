@@ -3,6 +3,7 @@ import { useUser } from '../utils/auth/useUser'
 import WatchLoader from '../components/WatchLoader'
 import List from '../components/List'
 import Upload from '../components/Upload'
+import Invite from '../components/Invite'
 import { getUsers } from '../utils/firestore/getUsers'
 import {useState, useEffect, createContext} from 'react'
 import Select from 'react-select'
@@ -76,6 +77,9 @@ const Index = () => {
         <List />
         <Upload />
       </uidContext.Provider>
+      { user.admin == true &&
+        <Invite />
+      }
       <div className="siimple-footer" style={{
         display: "flex",
         justifyContent: "center",
