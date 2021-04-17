@@ -5,6 +5,12 @@ import 'firebase/firestore'
 const firestore = firebase.firestore()
 const invitedRef = firestore.collection('invited')
 
+interface IValue {
+  input: string,
+  message: string,
+  disabled: boolean
+}
+
 const isInvited = async (value: string) => {
   const invitedQuerySnapshot = await invitedRef.where('email', '==', value).get()
   .catch(function(error) {
@@ -20,19 +26,41 @@ const isInvited = async (value: string) => {
 }
 
 const Invite = () => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState<IValue>({
+    input: '',
+    message: '',
+    disabled: true
+  })
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const address = event.target.value;
+    const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]/
+    if (!regex.test(address)) {
+      setValue({
+        input: address, 
+        message: '正しいフォーマットで入力してください',
+        disabled: true
+      })
+      return
+    }
+    setValue({
+      input: address, 
+      message: '',
+      disabled: false
+    })  
+  }
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
     
     try {
-      if (await isInvited(value)) {
+      if (await isInvited(value.input)) {
         alert('既に招待済みの email アドレスです')
         return
       }
       const date = firebase.firestore.Timestamp.fromDate(new Date())
       await invitedRef.add({
-        email: value,
+        email: value.input,
         registered: date,
       })
     }
@@ -40,7 +68,7 @@ const Invite = () => {
       alert('Firestore へのアクセスが失敗しました。\nネットワーク接続を確認してください。')
     } 
 
-    alert(value + ' を招待できるようになりました。\nこのサイトの URL を連絡してください。')
+    alert(value.input + ' を招待できるようになりました。\nこのサイトの URL を連絡してください。')
   }
 
   return (
@@ -51,11 +79,19 @@ const Invite = () => {
             className="siimple-input siimple-input--fluid" 
             placeholder="foobar@company.com"
             type="text"
-            value={value}
-            onChange={e => setValue(e.target.value)}
+            value={value.input}
+            onChange={event => handleChange(event)}
           />
+          {value.message && (
+            <p style={{ color: 'red', fontSize: 8 }}>{value.message}</p>
+          )}
+
         </label>
-        <button className="siimple-btn siimple-btn--primary" type="submit">Invite</button>
+        {value.disabled ? (
+          <button className="siimple-btn siimple-btn--primary siimple-btn--disabled" disabled={value.disabled} type="submit">Invite</button>
+        ): (
+          <button className="siimple-btn siimple-btn--primary" type="submit">Invite</button>
+        )}
       </form>
     </div>
   )
