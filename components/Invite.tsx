@@ -14,7 +14,7 @@ interface IValue {
 const isInvited = async (value: string) => {
   const invitedQuerySnapshot = await invitedRef.where('email', '==', value).get()
   .catch(function(error) {
-    alert('Firestore の読み込みに失敗しました: ' + error)
+    alert('Firestore の読み込みに失敗しました: ' + error.message)
     throw new Error(error) 
   })
 
