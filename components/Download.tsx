@@ -17,8 +17,8 @@ const Download = (props) => {
 
       const data = await response.data
       fileDownload(data, props.file.substring(props.file.indexOf('/')+1));
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      alert(error.message);
     }
   }
 

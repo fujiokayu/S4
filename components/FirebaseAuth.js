@@ -38,8 +38,8 @@ const firebaseAuthConfig = {
           // Sign-out successful.
           router.push( '/auth' )
         } )
-        .catch( ( e ) => {
-          alert( e )
+        .catch( ( error ) => {
+          alert( error.message )
         } )
     },
   },

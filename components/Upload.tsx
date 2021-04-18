@@ -61,7 +61,7 @@ const Upload = () => {
           break
       }
     }, function(error) {
-      alert('failed to upload: ' + error)
+      alert('failed to upload: ' + error.message)
     }, function() {
       console.log('Upload is done')
       _refreshPage()

@@ -29,7 +29,7 @@ const List = () => {
       const listRef = firebase.storage().ref(uid)
       const result = await listRef.listAll()
       .catch(function(error) {
-        alert('list file error: ' + error)
+        alert('list file error: ' + error.message)
       })
   
       if (!result) {
@@ -49,7 +49,7 @@ const List = () => {
             fullPath: metadata.fullPath}
             files.push(item)
         }).catch(function(error) {
-          alert('getMetadata error: ' + error)
+          alert('getMetadata error: ' + error.message)
         })
       }))
       setLoaded(true)
