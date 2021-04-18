@@ -2,9 +2,9 @@ rules_version = '2';
 service firebase.storage {
   match /b/{bucket}/o {  // this should be this string literally, no need to put in the bucket name
     match /{userId}/{allPaths=**}{
-      allow read: if request.auth.uid == userId 
+      allow read: if request.auth.uid == userId && request.auth.token.isInvited == true
       						|| request.auth.token.admin == true;
-      allow write: if request.auth.uid == userId 
+      allow write: if request.auth.uid == userId && request.auth.token.isInvited == true
       						|| request.auth.token.admin == true;
     }
   }

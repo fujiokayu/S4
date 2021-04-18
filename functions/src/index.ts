@@ -46,6 +46,9 @@ exports.setCustomClaim = functions
     }
 
     console.log('create user: ', user.email )
+    // 正当なユーザーを識別するための claims を付与する
+    await admin.auth().setCustomUserClaims(user.uid, { isInvited: true })
+
     const date = admin.firestore.Timestamp.fromDate(new Date())
     await userRef.add({
       uid: user.uid,
