@@ -23,6 +23,7 @@ firebase deploy --only functions
 ## deploy(Google App Engine)
 
 ```bash
+npm run build
 gcloud app deploy app.yaml --project project-id
 ```
 
