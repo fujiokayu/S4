@@ -14,7 +14,13 @@ gsutil lifecycle set lifecycle.json gs://cloud-storage-id
 gsutil lifecycle get　gs://cloud-storage-id
 ```
 
-## deploy
+## deploy(Cloud Function)
+
+```bash
+firebase deploy --only functions
+```
+
+## deploy(Google App Engine)
 
 ```bash
 gcloud app deploy app.yaml --project project-id
