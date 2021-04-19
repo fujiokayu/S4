@@ -1,7 +1,6 @@
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { useRouter } from 'next/router'
 import initFirebase from '../utils/firebase/initFirebase'
 import { setUserCookie } from '../utils/auth/userCookies'
 import { mapUserData } from '../utils/auth/mapUserData'
@@ -30,17 +29,6 @@ const firebaseAuthConfig = {
         return
       }
       await user.sendEmailVerification()
-      const router = useRouter()
-      firebase
-        .auth()
-        .signOut()
-        .then( () => {
-          // Sign-out successful.
-          router.push( '/auth' )
-        } )
-        .catch( ( error ) => {
-          alert( error.message )
-        } )
     },
   },
 }
