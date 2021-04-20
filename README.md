@@ -1,4 +1,6 @@
-# Secure Storage
+# S4
+
+Simple Serverless Secure Storage
 
 ## set CORS
 
