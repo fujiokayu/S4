@@ -23,12 +23,8 @@ const firebaseAuthConfig = {
   credentialHelper: 'none',
   callbacks: {
     signInSuccessWithAuthResult: async ( { user }, redirectUrl ) => {
-      if ( user.emailVerified ) {
-        const userData = await mapUserData( user )
-        setUserCookie( userData )
-        return
-      }
-      await user.sendEmailVerification()
+      const userData = await mapUserData( user )
+      setUserCookie( userData )
     },
   },
 }

@@ -4,6 +4,7 @@ import WatchLoader from '../components/WatchLoader'
 import List from '../components/List'
 import Upload from '../components/Upload'
 import Invite from '../components/Invite'
+import VerifyEmail from '../components/VerifyEmail'
 import { getUsers } from '../utils/firestore/getUsers'
 import {useState, useEffect, createContext} from 'react'
 import Select from 'react-select'
@@ -58,6 +59,7 @@ const Index = () => {
             <a className="siimple-link">Sign in</a>
           </Link>
         </p>
+        <VerifyEmail />
       </>
     )
   }
