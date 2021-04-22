@@ -35,6 +35,15 @@ const Invite = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const address = event.target.value;
     const regex = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9]+\.[A-Za-z]/
+    if (address === '') {
+      setValue({
+        input: address, 
+        message: '',
+        disabled: true
+      })
+      return
+    }
+
     if (!regex.test(address)) {
       setValue({
         input: address, 
