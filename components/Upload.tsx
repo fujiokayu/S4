@@ -36,7 +36,9 @@ const Upload = () => {
     <li key={file.path}>
       {file.path} - {file.size} bytes{" "}
       <button className="siimple-btn siimple-btn--error" onClick={removeFile(file)}>取り消す</button>
-      <Progress percent={progress}/>
+      { progress > 0 &&
+        <Progress percent={progress}/>
+      }
     </li>
   ))
 
