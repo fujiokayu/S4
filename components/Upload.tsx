@@ -75,7 +75,7 @@ const Upload = () => {
       <section className="container">
         <div {...getRootProps({className: 'dropzone'})}>
           <input {...getInputProps()} />
-          <p>アップロードするファイルをドラッグアンドドロップしてください</p>
+          <p>アップロードするファイルをドロップしてください</p>
           <input className="siimple-btn siimple-btn--success" type="button" value="ファイルを選択する" style={{width : '100%'}}onClick={open} />
         </div>
         <aside>
