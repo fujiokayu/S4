@@ -71,7 +71,7 @@ const Index = () => {
         Sign out
       </p>
       {options.length > 0 ? (
-          <Select options={options} onChange={(onChange)}/>
+          <Select options={options} onChange={(onChange)} placeholder='ファイルを共有するユーザーを選択してください'/>
       ) : (
         <p>signed in : {user.email}</p>
       )}
