@@ -60,8 +60,9 @@ const List = () => {
   if (!loaded) {
     return (
       <>
-        <p className="siimple-tip siimple-tip--warning siimple-tip--exclamation">
-        Loading files...</p>
+        <br />
+        <div className="siimple-spinner siimple-spinner--primary"></div>
+        <br />
       </>
     )
   }
