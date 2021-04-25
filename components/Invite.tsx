@@ -83,7 +83,7 @@ const Invite = () => {
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <label className="siimple-field-label">ユーザー追加
+        <label className="siimple-field-label">ファイルを共有したいユーザーのアドレスを追加してください
           <input
             className="siimple-input siimple-input--fluid" 
             placeholder="foobar@company.com"
@@ -92,14 +92,15 @@ const Invite = () => {
             onChange={event => handleChange(event)}
           />
           {value.message && (
-            <p style={{ color: 'red', fontSize: 8 }}>{value.message}</p>
+            <p className="siimple-tip siimple-tip--warning siimple-tip--exclamation">
+            {value.message}</p>
           )}
 
         </label>
         {value.disabled ? (
-          <button className="siimple-btn siimple-btn--primary siimple-btn--disabled" disabled={value.disabled} type="submit">Invite</button>
+          <button className="siimple-btn siimple-btn--primary siimple-btn--disabled" disabled={value.disabled} type="submit">登録する</button>
         ): (
-          <button className="siimple-btn siimple-btn--primary" type="submit">Invite</button>
+          <button className="siimple-btn siimple-btn--primary" type="submit">登録する</button>
         )}
       </form>
     </div>

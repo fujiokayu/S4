@@ -44,7 +44,7 @@ const Index = () => {
         <WatchLoader />
         <br/>
         <Link href={'/auth'}>
-          <a className="siimple-link">Sign in</a>
+          <a className="siimple-link">サインイン</a>
         </Link>
       </>
     )
@@ -56,7 +56,7 @@ const Index = () => {
         <p className="siimple-tip siimple-tip--warning siimple-tip--exclamation">
           email に送られた確認コードにアクセスしていない場合もこのページが表示されます。{' '}
           <Link href={'/auth'}>
-            <a className="siimple-link">Sign in</a>
+            <a className="siimple-link">サインイン</a>
           </Link>
         </p>
         <VerifyEmail />
@@ -68,12 +68,12 @@ const Index = () => {
     <div>
       <div className="siimple-jumbotron-title">secure storage</div>
       <p className="siimple-btn siimple-btn--success" onClick={() => logout()}>
-        Sign out
+        サインアウト
       </p>
       {options.length > 0 ? (
           <Select options={options} onChange={(onChange)} placeholder='ファイルを共有するユーザーを選択してください'/>
       ) : (
-        <p>signed in : {user.email}</p>
+        <p>ユーザー: {user.email}</p>
       )}
       <uidContext.Provider value={uid}>
         <List />
@@ -85,8 +85,7 @@ const Index = () => {
       <div className="siimple-footer" style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
-      }}>
+        alignItems: "center"}}>
         <Link href={'/privacyPolicy'}>
           <a className="siimple-link">privacy policy</a>
         </Link>
