@@ -82,6 +82,9 @@ const Invite = () => {
 
   return (
     <div>
+      <br />
+      <hr />
+      <br />
       <form onSubmit={onSubmit}>
         <label className="siimple-field-label">ファイルを共有したいユーザーのアドレスを追加してください
           <input
