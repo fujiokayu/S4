@@ -21,8 +21,6 @@ const Upload = () => {
 
   const { getRootProps, acceptedFiles, getInputProps, open } = useDropzone({
     onDrop,
-    noClick: true,
-    noKeyboard: true,
     maxFiles: 1
   })
 
@@ -75,8 +73,10 @@ const Upload = () => {
       <section className="container">
         <div {...getRootProps({className: 'dropzone'})}>
           <input {...getInputProps()} />
-          <p>アップロードするファイルをドロップしてください</p>
-          <input className="siimple-btn siimple-btn--success" type="button" value="ファイルを選択する" style={{width : '100%'}}onClick={open} />
+          <p>ファイルをドロップしてアップロード
+            <br />
+            または、クリックしてファイルを選択してください
+          </p>
         </div>
         <aside>
           <ul>{uploadFiles}</ul>
