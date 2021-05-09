@@ -44,13 +44,13 @@ const Index = () => {
 
   if (!user) {
     return (
-      <>
+      <div style={{textAlign: 'center'}}>
         <WatchLoader />
         <br/>
         <Link href={'/auth'}>
           <a className="siimple-link">サインイン</a>
         </Link>
-      </>
+      </div>
     )
   }
   if (user.id == "" || (user && !user.verified)){

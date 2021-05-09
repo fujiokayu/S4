@@ -4,6 +4,7 @@ import { uidContext } from '../pages/index';
 import { format, add } from 'date-fns'
 import { useState, useEffect, useContext } from 'react';
 import firebase from 'firebase/app'
+import { listAll } from '../utils/storage/storageUtil'
 
 interface IFiles {
 	name: string,
@@ -34,12 +35,7 @@ const List = (props) => {
         return 
       }
 
-      const listRef = firebase.storage().ref(uid)
-      const result = await listRef.listAll()
-      .catch(function(error) {
-        alert('list file error: ' + error.message)
-      })
-  
+      const result = await listAll(uid)  
       if (!result) {
         return
       }
