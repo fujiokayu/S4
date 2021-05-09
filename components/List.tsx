@@ -14,13 +14,21 @@ interface IFiles {
 	fullPath: string
 }
 
-const List = () => {
+const List = (props) => {
   const [files, setFiles] = useState<IFiles[]>([])
   const [loaded, setLoaded] = useState(false)
+  const [update, setUpdate] = useState(false)
+
+  //子コンポーネントからの更新要求
+  const changeState = (isState) => {
+    setUpdate(isState)
+  }
 
   const uid = useContext(uidContext)
   useEffect(() => {
     setLoaded(false)
+    setUpdate(false)
+    props.updateList(false)
     const f = async () => {
       if (!uid) {
         return 
@@ -55,7 +63,7 @@ const List = () => {
       setLoaded(true)
     }
     f()
-  }, [uid])
+  }, [uid, update, props.uploaded])
 
   if (!loaded) {
     return (
@@ -77,7 +85,7 @@ const List = () => {
             <li key={file.md5Hash}>ファイル更新日：{format(new Date(file.updated), 'yyyy/MM/dd HH:mm:ss')}</li>
             <li key={file.fullPath}>有効期限　　　：{format(add(new Date(file.updated), {days: 7}), 'yyyy/MM/dd HH:mm:ss')}</li>
             <Download file={file.fullPath}/>
-            <Delete file={file.fullPath}/>
+            <Delete file={file.fullPath} changeState={changeState}/>
             <hr />
           </ul>
         ))

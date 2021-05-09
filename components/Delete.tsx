@@ -3,14 +3,11 @@ import { confirmAlert } from 'react-confirm-alert'; // Import
 
 
 const Delete = (props) => {
-  const _refreshPage = () => {
-    window.location.reload()
-  }
 
   const _deleteFile = async () => {
     const deleteRef = firebase.storage().ref(props.file)
     await deleteRef.delete().then(res => {
-      _refreshPage()
+      props.changeState(true)
     })
     .catch(error => {
       alert('ファイル削除に失敗しました: ' + error.message)

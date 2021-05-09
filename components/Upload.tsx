@@ -4,11 +4,7 @@ import { uidContext } from '../pages/index';
 import firebase from 'firebase/app'
 import Progress from '../components/Progress';
 
-const _refreshPage = () => {
-  window.location.reload()
-}
-
-const Upload = () => {
+const Upload = (props) => {
   const [files, setFiles] = useState([])
   const [progress, setProgress] = useState(0)
   const uid = useContext(uidContext)
@@ -64,7 +60,9 @@ const Upload = () => {
       alert('failed to upload: ' + error.message)
     }, function() {
       console.log('Upload is done')
-      _refreshPage()
+      setFiles([])
+      setProgress(0)
+      props.updateList(true)
     })
   }
 

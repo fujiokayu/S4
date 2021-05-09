@@ -15,8 +15,13 @@ const Index = () => {
   const { user, logout } = useUser()
   const [options, setOptions] = useState([])
   const [uid, setUid] = useState<string>()
+  const [uploaded, setUploaded] = useState(false)
+
   const onChange = (value) => {
     setUid(value.value)
+  }
+  const updateList = (isState) => {
+    setUploaded(isState)
   }
 
   // Init ui
@@ -40,7 +45,6 @@ const Index = () => {
   if (!user) {
     return (
       <>
-        <p className="siimple-jumbotron-title">Loading...</p>
         <WatchLoader />
         <br/>
         <Link href={'/auth'}>
@@ -76,8 +80,8 @@ const Index = () => {
         <p>ユーザー: {user.email}</p>
       )}
       <uidContext.Provider value={uid}>
-        <List />
-        <Upload />
+        <List updateList={updateList} uploaded={uploaded}/>
+        <Upload updateList={updateList}/>
       </uidContext.Provider>
       { user.admin == true &&
         <Invite />
