@@ -1,8 +1,10 @@
-import {useDropzone} from 'react-dropzone';
-import {useState, useCallback, useContext} from 'react';
-import { uidContext } from '../pages/index';
+import { useDropzone } from 'react-dropzone'
+import { useState, useCallback, useContext } from 'react'
+import { uidContext } from '../pages/index'
 import firebase from 'firebase/app'
-import Progress from '../components/Progress';
+import Progress from '../components/Progress'
+import { fileExists } from '../utils/storage/storageUtil'
+import { confirmAlert } from 'react-confirm-alert'
 
 const Upload = (props) => {
   const [files, setFiles] = useState([])
@@ -36,8 +38,7 @@ const Upload = (props) => {
     </li>
   ))
 
-  async function onSubmit(event) {
-    event.preventDefault()
+  async function uploadFile() {
     setProgress(0)
 
     const blob: File = acceptedFiles[0]
@@ -64,6 +65,30 @@ const Upload = (props) => {
       setProgress(0)
       props.updateList(true)
     })
+  }
+
+  async function onSubmit(event) {
+    event.preventDefault()
+
+    if (await fileExists(uid, acceptedFiles[0].name)) {
+      confirmAlert({
+        title: '「' + acceptedFiles[0].name + '」' + 'は既に存在します。上書きしますか？',
+        buttons: [
+          {
+            label: '上書きします',
+            onClick: () => uploadFile()
+          },
+          {
+            label: 'キャンセル',
+            // 何もしない
+            onClick: () => void(0)
+          }
+        ]
+      })
+    }
+    else {
+      uploadFile()
+    }
   }
 
   return (
