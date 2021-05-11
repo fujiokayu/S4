@@ -2,7 +2,7 @@ import {FormEvent} from 'react';
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-const VerifyEmail = () => {
+const VerifyEmail = (props) => {
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
@@ -25,10 +25,14 @@ const VerifyEmail = () => {
 
   return (
     <div>
-    <form onSubmit={onSubmit} >
-      <label className="siimple-field-label">サインアップしたメールアドレスに確認コードを送信する</label>
-      <button className="siimple--float-left siimple-btn siimple-btn--primary" type="submit">送信</button>
-    </form>
+      <p className='siimple--color-black' style={{fontSize: 20, textAlign: 'center'}}>確認メールを送信し、メール本文に記載された URL をクリックしてアカウントを有効化してください。</p>
+      <form onSubmit={onSubmit} style={{textAlign: 'center'}}>
+        <label className="siimple-field-label" style={{fontSize: 30, color: "gray"}}>{props.email} に確認メールを送信する</label>
+        <br />
+        <button className="siimple-btn siimple-btn--primary siimple-btn--big" type="submit">送信</button>
+      </form>
+      <br />
+      <p className='siimple--color-black' style={{fontSize: 20, textAlign: 'center'}}>確認メールが届かない場合は foobar Inc. までご連絡ください。</p>
     </div>
   )
 }

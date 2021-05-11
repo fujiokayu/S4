@@ -8,6 +8,7 @@ import VerifyEmail from '../components/VerifyEmail'
 import { getUsers } from '../utils/firestore/getUsers'
 import {useState, useEffect, createContext} from 'react'
 import Select from 'react-select'
+import { useRouter } from 'next/router'
 
 export const uidContext = createContext('')
 
@@ -16,6 +17,7 @@ const Index = () => {
   const [options, setOptions] = useState([])
   const [uid, setUid] = useState<string>()
   const [uploaded, setUploaded] = useState(false)
+  const router = useRouter()
 
   const onChange = (value) => {
     setUid(value.value)
@@ -42,58 +44,53 @@ const Index = () => {
     }
   }, [user])
 
-  if (!user) {
-    return (
-      <div style={{textAlign: 'center'}}>
-        <WatchLoader />
-        <br/>
-        <Link href={'/auth'}>
-          <a className="siimple-link">サインイン</a>
-        </Link>
-      </div>
-    )
+  if (user && user.id == '') {
+    router.push('/auth')
   }
-  if (user.id == "" || (user && !user.verified)){
+
+  // サインアップ済み、かつ、Email 未認証
+  if (user && user.id != '' && !user.verified) {
     return (
       <>
-        <p className="siimple-jumbotron-title">Sign in してからご利用ください。</p>
-        <p className="siimple-tip siimple-tip--warning siimple-tip--exclamation">
-          email に送られた確認コードにアクセスしていない場合もこのページが表示されます。{' '}
-          <Link href={'/auth'}>
-            <a className="siimple-link">サインイン</a>
-          </Link>
-        </p>
-        <VerifyEmail />
+        <p className="siimple-jumbotron-title" style={{textAlign: 'center'}}>お使いのメールアドレスはまだ有効になっていません。</p>
+        <VerifyEmail email={user.email}/>
       </>
     )
   }
 
-  return (
-    <div>
-      <div className="siimple-jumbotron-title">secure storage</div>
-      <p className="siimple-btn siimple-btn--success" onClick={() => logout()}>
+  // 認証済みユーザー
+  if (user && user.id != '' && user.verified) {
+    return (
+      <div>
+        <p className="siimple-btn siimple-btn--grey" onClick={() => logout()}>
         サインアウト
-      </p>
-      {options.length > 0 ? (
+        </p>
+        {options.length > 0 ? (
           <Select options={options} onChange={(onChange)} placeholder='ファイルを共有するユーザーを選択してください'/>
-      ) : (
-        <p>ユーザー: {user.email}</p>
-      )}
-      <uidContext.Provider value={uid}>
-        <List updateList={updateList} uploaded={uploaded}/>
-        <Upload updateList={updateList} user={user.email}/>
-      </uidContext.Provider>
-      { user.admin == true &&
-        <Invite />
-      }
-      <div className="siimple-footer" style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"}}>
-        <Link href={'/privacyPolicy'}>
-          <a className="siimple-link">privacy policy</a>
-        </Link>
+          ) : (
+          <p>サインイン: {user.email}</p>
+        )}
+        { (user.admin != true || user.id != uid) &&
+          <uidContext.Provider value={uid}>
+            <List updateList={updateList} uploaded={uploaded}/>
+            <Upload updateList={updateList} user={user.email}/>
+          </uidContext.Provider>
+        }
+        { user.admin == true &&
+          <Invite />
+        }
       </div>
+    )
+  }
+
+  // ユーザー情報の取得中
+  return (
+    <div style={{textAlign: 'center'}}>
+      <WatchLoader />
+      <br/>
+      <Link href={'/auth'}>
+        <a className="siimple-link">サインイン</a>
+      </Link>
     </div>
   )
 }
