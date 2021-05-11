@@ -12,7 +12,8 @@ interface IFiles {
 	size: number,
 	updated: Date,
 	md5Hash: string,
-	fullPath: string
+	fullPath: string,
+  user: string
 }
 
 const List = (props) => {
@@ -40,22 +41,25 @@ const List = (props) => {
         return
       }
 
-      files.splice(0)
+      let newList = []
       await Promise.all(result.items.map(async element => {
         const fileRef = firebase.storage().ref(uid).child(element.name)
         await fileRef.getMetadata().then(function(metadata) {
-          const item: IFiles = { 
+          const item: IFiles = {
             name: element.name,
             contentType: metadata.contentType,
             size: metadata.size,
             updated: metadata.updated,
             md5Hash: metadata.md5Hash,
-            fullPath: metadata.fullPath}
-            files.push(item)
+            fullPath: metadata.fullPath,
+            user: metadata.customMetadata.createUser
+          }
+          newList.push(item)
         }).catch(function(error) {
           alert('getMetadata error: ' + error.message)
         })
       }))
+      setFiles(newList)
       setLoaded(true)
     }
     f()
@@ -77,9 +81,10 @@ const List = (props) => {
         files.map((file) => (
           <ul>
             <span>{file.name}</span> : {file.contentType}
-            <li key={file.size}>ファイルサイズ：{Math.round(file.size / 1024 * 10) / 10}kb</li>
-            <li key={file.md5Hash}>ファイル更新日：{format(new Date(file.updated), 'yyyy/MM/dd HH:mm:ss')}</li>
-            <li key={file.fullPath}>有効期限　　　：{format(add(new Date(file.updated), {days: 7}), 'yyyy/MM/dd HH:mm:ss')}</li>
+            <li key={file.size}>ファイルサイズ　　　：{Math.round(file.size / 1024 * 10) / 10}kb</li>
+            <li key={file.md5Hash}>ファイル更新日　　　：{format(new Date(file.updated), 'yyyy/MM/dd HH:mm:ss')}</li>
+            <li key={file.fullPath}>有効期限　　　　　　：{format(add(new Date(file.updated), {days: 7}), 'yyyy/MM/dd HH:mm:ss')}</li>
+            <li key={file.user}>アップロードユーザー：{file.user}</li>
             <Download file={file.fullPath}/>
             <Delete file={file.fullPath} changeState={changeState}/>
             <hr />

@@ -81,7 +81,7 @@ const Index = () => {
       )}
       <uidContext.Provider value={uid}>
         <List updateList={updateList} uploaded={uploaded}/>
-        <Upload updateList={updateList}/>
+        <Upload updateList={updateList} user={user.email}/>
       </uidContext.Provider>
       { user.admin == true &&
         <Invite />

@@ -11,6 +11,12 @@ const Upload = (props) => {
   const [progress, setProgress] = useState(0)
   const uid = useContext(uidContext)
 
+  const metadata = {
+    customMetadata: {
+      'createUser': props.user,
+    }
+  }
+
   const onDrop = useCallback(acceptedFiles => {
     const newFiles = [...files]
     newFiles.splice(0)
@@ -46,7 +52,7 @@ const Upload = (props) => {
 
     const storageRef = firebase.storage().ref()
     const uploadRef = storageRef.child(filePath)
-    const uploadTask = uploadRef.put(blob)
+    const uploadTask = uploadRef.put(blob, metadata)
     uploadTask.on('state_changed', function(snapshot){
       const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
       setProgress(percent)
