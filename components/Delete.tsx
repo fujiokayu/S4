@@ -1,10 +1,10 @@
 import firebase from 'firebase/app'
-import { confirmAlert } from 'react-confirm-alert'; // Import
+import { confirmAlert } from 'react-confirm-alert'
 
 
 const Delete = (props) => {
 
-  const _deleteFile = async () => {
+  const deleteFile = async () => {
     const deleteRef = firebase.storage().ref(props.file)
     await deleteRef.delete().then(res => {
       props.changeState(true)
@@ -21,7 +21,7 @@ const Delete = (props) => {
       buttons: [
         {
           label: '削除します',
-          onClick: () => _deleteFile()
+          onClick: () => deleteFile()
         },
         {
           label: 'キャンセル',
