@@ -29,6 +29,13 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+*firebase-adminsdk*.json
+.firebaserc
 
 # vercel
 .vercel
+
+# firebase
+*debug.log
+
+.prettierrc

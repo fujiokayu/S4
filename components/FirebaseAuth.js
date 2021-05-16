@@ -1,7 +1,7 @@
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import initFirebase from '../utils/auth/initFirebase'
+import initFirebase from '../utils/firebase/initFirebase'
 import { setUserCookie } from '../utils/auth/userCookies'
 import { mapUserData } from '../utils/auth/mapUserData'
 
@@ -13,6 +13,7 @@ const firebaseAuthConfig = {
   // Auth providers
   // https://github.com/firebase/firebaseui-web#configure-oauth-providers
   signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
     {
       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
       requireDisplayName: false,
@@ -21,9 +22,9 @@ const firebaseAuthConfig = {
   signInSuccessUrl: '/',
   credentialHelper: 'none',
   callbacks: {
-    signInSuccessWithAuthResult: async ({ user }, redirectUrl) => {
-      const userData = await mapUserData(user)
-      setUserCookie(userData)
+    signInSuccessWithAuthResult: async ( { user }, redirectUrl ) => {
+      const userData = await mapUserData( user )
+      setUserCookie( userData )
     },
   },
 }

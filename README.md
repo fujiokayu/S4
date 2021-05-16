@@ -1,3 +1,36 @@
+# S4
+
+Simple Serverless Secure Storage
+
+## set CORS
+
+```bash
+gsutil cors set cors_setting.json gs://cloud-storage-id
+gsutil cors get gs://cloud-storage-id
+```
+
+## set lifecycle
+
+```bash
+gsutil lifecycle set lifecycle.json gs://cloud-storage-id
+gsutil lifecycle get　gs://cloud-storage-id
+```
+
+## deploy(Cloud Function)
+
+```bash
+firebase deploy --only functions
+```
+
+## deploy(Google App Engine)
+
+```bash
+npm run build
+gcloud app deploy app.yaml --project project-id
+```
+
+---
+
 # Example: Firebase authentication with a serverless API
 
 This example includes Firebase authentication and serverless [API routes](https://nextjs.org/docs/api-routes/introduction).
