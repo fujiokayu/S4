@@ -73,10 +73,11 @@ td,th{
 
 
 .downloadButton {
+  background-image:url('/download.png');
   display: flex;
   margin-right: 10px;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background-size: 100%;
   border: none;
   background-color: transparent;
@@ -84,10 +85,11 @@ td,th{
 }
 
 .deleteButton {
+  background-image:url('/delete.png');
   display: flex;
   margin-left: 10px;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background-size: 30px 30px;
   background-size: 100%;
   border: none;
