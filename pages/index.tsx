@@ -47,7 +47,7 @@ const Index = () => {
   if (user && user.id == '') {
     router.push('/auth')
   }
-
+  
   // サインアップ済み、かつ、Email 未認証
   if (user && user.id != '' && !user.verified) {
     return (
@@ -72,10 +72,11 @@ const Index = () => {
         )}
         { (user.admin != true || user.id != uid) &&
           <uidContext.Provider value={uid}>
-            <List updateList={updateList} uploaded={uploaded}/>
             <Upload updateList={updateList} user={user.email}/>
+            <List updateList={updateList} uploaded={uploaded}/>
           </uidContext.Provider>
         }
+        <hr />
         { user.admin == true &&
           <Invite />
         }
