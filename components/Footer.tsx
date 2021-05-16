@@ -1,9 +1,14 @@
+import Link from 'next/link'
+
 const Footer = () => {
   return (
-    <div className="bg-example siimple--bg-primary siimple--color-white">
+    <footer className='siimple--color-white' style={{textAlign: 'center', backgroundColor: 'rgba(0, 0, 128, 1)'}}>
+      <Link href='./privacyPolicy/' passHref={true}>
+        <a style={{color: 'white'}}>privacy policy</a>
+      </Link>
+      <br />
       Copyright © foobar Inc. All Rights Reserved.
-    </div>
-)
-}
+    </footer>
+  )}
 
 export default Footer
