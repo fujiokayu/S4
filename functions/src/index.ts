@@ -29,7 +29,7 @@ exports.setCustomClaim = functions
     if ( adminQuerySnapshot.size === 0 && invitedQuerySnapshot.size === 0) {
       return admin.auth()
       .updateUser(user.uid, {disabled: true})
-      .then(userRecord => console.log(`Auto blocked user: ${userRecord.toJSON()}`))
+      .then(userRecord => console.log(`Auto blocked user: ${user.email}`))
       .catch(error => console.log(`Error auto blocking: ${error}`))
     }
 
