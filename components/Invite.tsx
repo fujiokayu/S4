@@ -92,7 +92,7 @@ const Invite = () => {
             onChange={event => handleChange(event)}
           />
           {value.message && (
-            <p className="siimple-tip siimple-tip--warning siimple-tip--exclamation">
+            <p className="siimple-tip siimple-tip--warning siimple-tip--exclamation" style={{ color: 'red', fontSize: 12, backgroundColor: 'rgba(255, 239, 192, 1)' }}>
             {value.message}</p>
           )}
 
