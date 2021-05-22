@@ -98,7 +98,7 @@ const Upload = (props) => {
   }
 
   return (
-    <div>
+    <div style={{textAlign: 'center'}}>
       <section className="container">
         <div {...getRootProps({className: 'dropzone'})}>
           <input {...getInputProps()} />
@@ -114,6 +114,8 @@ const Upload = (props) => {
       {uploadFiles.length > 0 && (
         <form onSubmit={onSubmit}>
           <button className="siimple-btn siimple-btn--primary" type="submit">アップロード</button>
+          <p className="siimple-tip siimple-tip--warning siimple-tip--exclamation" style={{ width: '380px', display: 'flex', margin: 'auto', marginTop: '20px', backgroundColor: 'rgba(255, 239, 192, 1)' }}> 
+            アップロードしたファイルは1週間後に削除されます </p>
         </form>
       )}
     </div>
