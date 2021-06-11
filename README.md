@@ -5,14 +5,14 @@ Simple Serverless Secure Storage
 ## set CORS
 
 ```bash
-gsutil cors set cors_setting.json gs://cloud-storage-id
+gsutil cors set firebase-config/cors_setting.json gs://cloud-storage-id
 gsutil cors get gs://cloud-storage-id
 ```
 
 ## set lifecycle
 
 ```bash
-gsutil lifecycle set lifecycle.json gs://cloud-storage-id
+gsutil lifecycle set firebase-config/lifecycle.json gs://cloud-storage-id
 gsutil lifecycle get　gs://cloud-storage-id
 ```
 
