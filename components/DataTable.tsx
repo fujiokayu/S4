@@ -85,7 +85,15 @@ const DataTable = (props) => {
     prepareRow,
   } = useTable({ 
     columns,
-    data
+    data,
+    initialState: {
+      sortBy: [
+          {
+              id: 'updated',
+              desc: true
+          }
+      ]
+    }
   }, useSortBy)
 
   return (
