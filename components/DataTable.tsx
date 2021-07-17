@@ -9,55 +9,42 @@ const DataTable = (props) => {
   const columns = useMemo(
     () => [
       {
-        Header: () => (
-          <div style={{ textAlign: 'left' }}>ファイル名</div>
-        ),
+        Header: 'ファイル名',
         accessor: 'name',
-        isSorted: 'true',
         Cell: row => (
           <div style={{ textAlign: 'left' }}>{row.value}</div>
         )
       },
       {
-        Header: () => (
-          <div style={{ textAlign: 'left' }}>ファイル種別</div>
-        ),
+        Header: 'ファイル種別',
         accessor: 'contentType',
         Cell: row => (
           <div style={{ textAlign: 'left' }}>{row.value}</div>
         )
       },
       {
-        Header: () => (
-          <div style={{ textAlign: 'right' }}>ファイルサイズ</div>
-        ),
+        Header: 'ファイルサイズ',
         accessor: 'size',
         Cell: row => (
           <div style={{ textAlign: 'right' }}>{row.value}</div>
         )
       },
       {
-        Header: () => (
-          <div style={{ textAlign: 'center' }}>更新日</div>
-        ),
+        Header: '更新日',
         accessor: 'updated',
         Cell: row => (
           <div style={{ textAlign: 'center' }}>{row.value}</div>
         )
       },
       {
-        Header: () => (
-          <div style={{ textAlign: 'center' }}>有効期限</div>
-        ),
+        Header: '有効期限',
         accessor: 'expireDate',
         Cell: row => (
           <div style={{ textAlign: 'center' }}>{row.value}</div>
         )
       },
       {
-        Header: () => (
-          <div style={{ textAlign: 'left' }}>アップロードユーザー</div>
-        ),
+        Header: 'アップロードユーザー',
         accessor: 'user',
         Cell: row => (
           <div style={{ textAlign: 'left' }}>{row.value}</div>
