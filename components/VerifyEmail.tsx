@@ -1,22 +1,26 @@
-import {FormEvent} from 'react';
-import firebase from 'firebase/app'
-import 'firebase/auth'
+import { FormEvent, useState } from 'react'
+import { getAuth, sendEmailVerification } from 'firebase/auth'
+import { firebaseApp } from '../utils/firebase/initFirebase'
+import { confirmAlert } from 'react-confirm-alert'
+
+const auth = getAuth(firebaseApp)
 
 const VerifyEmail = (props) => {
-
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault()
     try {
-      const user = firebase.auth().currentUser
+      const user = auth.currentUser
       if (user === null) {
         alert('サインアップしてから実行してください。')
         return
       }
-      await user.sendEmailVerification()
+      await sendEmailVerification(user)
     }
     catch (e) {
       alert('確認コードの送信に失敗しました。サイファー・テックまでお問い合わせください。')
-      alert(e.message)
+      if (e instanceof Error) {
+        alert(e.message)
+      }
       return
     } 
 

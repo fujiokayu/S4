@@ -1,8 +1,8 @@
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import { getFirestore, collection, getDocs, query, where } from 'firebase/firestore'
+import { firebaseApp } from '../firebase/initFirebase'
 
-const firestore = firebase.firestore()
-const userRef = firestore.collection('user')
+const db = getFirestore(firebaseApp)
+const userRef = collection(db, 'user')
 
 interface IUserList {
   uid: string,
@@ -11,10 +11,7 @@ interface IUserList {
 
 export const getUsers = async () => {
   try {
-    const userQuerySnapshot: any = await userRef.get()
-    .catch(function(error) {
-      console.error("Error fetching user document: ", error)
-    })
+    const userQuerySnapshot = await getDocs(userRef)
     
     let userList: IUserList[] = new Array()
 
@@ -37,7 +34,8 @@ export const getUsers = async () => {
 }
 
 export const exists = async (id) => {
-  const querySnapshot = await userRef.where('id', '==', id).get()
+  const q = query(userRef, where('id', '==', id))
+  const querySnapshot = await getDocs(q)
   if (querySnapshot.size > 0) {
     return true
   }

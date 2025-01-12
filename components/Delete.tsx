@@ -1,12 +1,18 @@
-import firebase from 'firebase/app'
+import { getStorage, ref, deleteObject } from 'firebase/storage'
 import { confirmAlert } from 'react-confirm-alert'
+import { firebaseApp } from '../utils/firebase/initFirebase'
 
+interface DeleteProps {
+  file: string
+  changeState: (state: boolean) => void
+}
 
-const Delete = (props) => {
+const Delete = (props: DeleteProps) => {
+  const storage = getStorage(firebaseApp)
 
   const deleteFile = async () => {
-    const deleteRef = firebase.storage().ref(props.file)
-    await deleteRef.delete().then(res => {
+    const deleteRef = ref(storage, props.file)
+    await deleteObject(deleteRef).then(() => {
       props.changeState(true)
     })
     .catch(error => {
