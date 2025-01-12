@@ -89,7 +89,7 @@ const Index = () => {
     <div style={{textAlign: 'center'}}>
       <WatchLoader />
       <br/>
-      <Link href={'/auth'}>
+      <Link href={'/auth'} legacyBehavior>
         <a className="siimple-link">サインイン</a>
       </Link>
     </div>
