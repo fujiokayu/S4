@@ -1,13 +1,19 @@
 import Axios from 'axios'
 import fileDownload from 'js-file-download'
-import firebase from 'firebase/app'
+import { getStorage, ref, getDownloadURL } from 'firebase/storage'
+import { firebaseApp } from '../utils/firebase/initFirebase'
 
-const Download = (props) => {
+interface DownloadProps {
+  file: string
+}
+
+const Download = (props: DownloadProps) => {
+  const storage = getStorage(firebaseApp)
   async function onSubmit(event) {
     try {
       event.preventDefault()
-      const pathReference = firebase.storage().ref(props.file);
-      const url = await pathReference.getDownloadURL()
+      const pathReference = ref(storage, props.file);
+      const url = await getDownloadURL(pathReference)
       console.log(url)
 
       const response = await Axios.get(url, {
@@ -18,7 +24,11 @@ const Download = (props) => {
       const data = await response.data
       fileDownload(data, props.file.substring(props.file.indexOf('/')+1));
     } catch (error) {
-      alert(error.message);
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert('ファイルのダウンロードに失敗しました');
+      }
     }
   }
 

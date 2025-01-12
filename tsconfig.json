@@ -23,6 +23,7 @@
     "strictBindCallApply": false,
     "strictPropertyInitialization": false,
     "noImplicitThis": false,
+    "incremental": true
   },
   "include": [
     "next-env.d.ts",

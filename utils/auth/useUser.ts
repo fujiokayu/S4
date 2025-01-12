@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import initFirebase from '../firebase/initFirebase'
+import { getAuth, onIdTokenChanged, signOut } from 'firebase/auth'
+import { firebaseApp } from '../firebase/initFirebase'
 import {
   removeUserCookie,
   setUserCookie,
@@ -18,32 +17,28 @@ interface typeUser {
   admin: boolean
 }
 
-initFirebase()
+const auth = getAuth(firebaseApp)
 
 const useUser = () => {
   const [user, setUser] = useState<typeUser | null>(null)
   const router = useRouter()
 
   const logout = async () => {
-    return firebase
-      .auth()
-      .signOut()
-      .then( () => {
+    return signOut(auth)
+      .then(() => {
         // Sign-out successful.
-        router.push( '/auth' )
-      } )
-      .catch( ( e ) => {
-        console.error( e )
-      } )
+        router.push('/auth')
+      })
+      .catch((e) => {
+        console.error(e)
+      })
   }
 
-  useEffect( () => {
+  useEffect(() => {
     // Firebase updates the id token every hour, this
     // makes sure the react state and the cookie are
     // both kept up to date
-    const cancelAuthListener = firebase
-      .auth()
-      .onIdTokenChanged( async ( user ) => {
+    const cancelAuthListener = onIdTokenChanged(auth, async (user) => {
         if ( user ) {
           const userData = await mapUserData( user )
           setUserCookie( userData )

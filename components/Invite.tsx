@@ -1,9 +1,9 @@
-import {useState, FormEvent} from 'react';
-import firebase from 'firebase/app'
-import 'firebase/firestore'
+import { useState, FormEvent } from 'react'
+import { getFirestore, collection, query, where, getDocs, addDoc, Timestamp } from 'firebase/firestore'
+import { firebaseApp } from '../utils/firebase/initFirebase'
 
-const firestore = firebase.firestore()
-const invitedRef = firestore.collection('invited')
+const firestore = getFirestore(firebaseApp)
+const invitedRef = collection(firestore, 'invited')
 
 interface IValue {
   input: string,
@@ -12,7 +12,8 @@ interface IValue {
 }
 
 const isInvited = async (value: string) => {
-  const invitedQuerySnapshot = await invitedRef.where('email', '==', value).get()
+  const q = query(invitedRef, where('email', '==', value))
+  const invitedQuerySnapshot = await getDocs(q)
   .catch(function(error) {
     alert('Firestore の読み込みに失敗しました: ' + error.message)
     throw new Error(error) 
@@ -67,8 +68,8 @@ const Invite = () => {
         alert('既に招待済みの email アドレスです')
         return
       }
-      const date = firebase.firestore.Timestamp.fromDate(new Date())
-      await invitedRef.add({
+      const date = Timestamp.fromDate(new Date())
+      await addDoc(invitedRef, {
         email: value.input,
         registered: date,
       })

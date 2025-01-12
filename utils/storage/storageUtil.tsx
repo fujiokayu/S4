@@ -1,29 +1,24 @@
-import firebase from 'firebase/app'
+import { getStorage, ref, listAll } from 'firebase/storage'
+import { firebaseApp } from '../firebase/initFirebase'
 
-export const listAll = async (uid: string) => {
+const storage = getStorage(firebaseApp)
+
+export const listAllFiles = async (uid: string) => {
   try {
-    const listRef = firebase.storage().ref(uid)
-    return await listRef.listAll()
+    const listRef = ref(storage, uid)
+    return await listAll(listRef)
   } catch(error) {
-    alert('list file error: ' + error.message)
+    console.error('list file error:', error)
+    throw error
   }
-
-  return
 }
 
 export const fileExists = async (uid: string, fileName: string) => {
   try {
-    let result = false
-    const files = await listAll(uid)
-    files.items.map(async file => {
-      if (file.name == fileName) {
-        result = true
-      }
-    })
-    return result  
+    const files = await listAllFiles(uid)
+    return files.items.some(file => file.name === fileName)
   } catch(error) {
-    alert('list file error: ' + error.message)
+    console.error('file exists check error:', error)
+    throw error
   }
-
-  return
 }

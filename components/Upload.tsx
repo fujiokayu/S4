@@ -1,10 +1,13 @@
 import { useDropzone } from 'react-dropzone'
 import { useState, useCallback, useContext } from 'react'
 import { uidContext } from '../pages/index'
-import firebase from 'firebase/app'
+import { getStorage, ref, uploadBytesResumable } from 'firebase/storage'
+import { firebaseApp } from '../utils/firebase/initFirebase'
 import Progress from '../components/Progress'
 import { fileExists } from '../utils/storage/storageUtil'
 import { confirmAlert } from 'react-confirm-alert'
+
+const storage = getStorage(firebaseApp)
 
 const Upload = (props) => {
   const [files, setFiles] = useState([])
@@ -50,17 +53,16 @@ const Upload = (props) => {
     const blob: File = acceptedFiles[0]
     const filePath = uid + '/' + acceptedFiles[0].name
 
-    const storageRef = firebase.storage().ref()
-    const uploadRef = storageRef.child(filePath)
-    const uploadTask = uploadRef.put(blob, metadata)
-    uploadTask.on('state_changed', function(snapshot){
+    const storageRef = ref(storage, filePath)
+    const uploadTask = uploadBytesResumable(storageRef, blob, metadata)
+    uploadTask.on('state_changed', (snapshot) => {
       const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
       setProgress(percent)
       switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED: // or 'paused'
+        case 'paused':
           console.log('Upload is paused')
           break
-        case firebase.storage.TaskState.RUNNING: // or 'running'
+        case 'running':
           break
       }
     }, function(error) {
