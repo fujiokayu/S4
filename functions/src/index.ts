@@ -1,4 +1,4 @@
-import * as functions from 'firebase-functions'
+import * as functions from 'firebase-functions/v1'
 import * as admin from 'firebase-admin'
 
 // // Start writing Firebase Functions
@@ -9,6 +9,9 @@ import * as admin from 'firebase-admin'
 //   response.send("Hello from Firebase!");
 // });
 
+// eslint-disable-next-line no-undef
+const console = global.console;
+
 admin.initializeApp({
   credential: admin.credential.applicationDefault(),
   databaseURL: 'https://lobster-97151.firebaseio.com',
@@ -17,9 +20,10 @@ const adminRef = admin.firestore().collection('administrators')
 const invitedRef = admin.firestore().collection('invited')
 const userRef = admin.firestore().collection('user')
 
-exports.setCustomClaim = functions
+export const setCustomClaim = functions
   .region('asia-northeast1')
-  .auth.user()
+  .auth
+  .user()
   .onCreate(async (user) => {
     const adminQuerySnapshot = await adminRef.where('email', '==', user.email).get()
     const invitedQuerySnapshot = await invitedRef.where('email', '==', user.email).get()
@@ -29,7 +33,7 @@ exports.setCustomClaim = functions
     if ( adminQuerySnapshot.size === 0 && invitedQuerySnapshot.size === 0) {
       return admin.auth()
       .updateUser(user.uid, {disabled: true})
-      .then(userRecord => console.log(`Auto blocked user: ${user.email}`))
+      .then(() => console.log(`Auto blocked user: ${user.email}`))
       .catch(error => console.log(`Error auto blocking: ${error}`))
     }
 
