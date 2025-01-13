@@ -22,7 +22,7 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^11.7.1",
     "react-loader-spinner": "^4.0.0",
-    "react-select": "^4.3.1",
+    "react-select": "^5.9.0",
     "react-table": "^7.8.0",
     "sass": "^1.83.1",
     "siimple": "^3.3.1"
